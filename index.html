@@ -1,15 +1,31 @@
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://js.arcgis.com/4.19/esri/themes/light/main.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.19/esri/themes/light/main.css"
+    />
     <script src="https://js.arcgis.com/4.19/"></script>
     <title>Document</title>
-</head>
-<body>
-    <div id="viewDiv"></div>
-</body>
-<script src="index.js"></script>
+  </head>
+  <body>
+    <div id="viewDiv"><div id="tableDiv"></div></div>
+  </body>
+  <div id="layerQuery">
+    <h2>Layers</h2>
+    <button id="All Projects" class="layerSelect">All Projects</button>
+    <button id="Finished" class="layerSelect">Finished</button>
+    <button id="In Design" class="layerSelect">In Design</button>
+    <button id="Planned" class="layerSelect">Planned</button>
+    <button id="Studies" class="layerSelect">Studies</button>
+    <button id="Construction" class="layerSelect">Construction</button>
+    <button id="Substantially Complete" class="layerSelect">
+      Substantially Complete
+    </button>
+  </div>
+
+  <script src="index.js"></script>
 </html>
