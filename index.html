@@ -1,0 +1,72 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.20/esri/themes/light/main.css"
+    />
+    <script src="https://js.arcgis.com/4.20/"></script>
+    <title>UDOT Projects App 2 - Demo</title>
+  </head>
+  <body>
+      <div id="viewDiv"></div>
+      <div id="tableDiv"></div>
+  </body>
+  <div id="layerQuery" class="container esri-widget">
+    <h2>Layers</h2>
+    <button id="All Projects" class="layerSelect">All Projects</button>
+    <button id="Finished" class="layerSelect">Finished</button>
+    <button id="In Design" class="layerSelect">In Design</button>
+    <button id="Planned" class="layerSelect">Planned</button>
+    <button id="Studies" class="layerSelect">Studies</button>
+    <button id="Construction" class="layerSelect">Construction</button>
+    <button id="Substantially Complete" class="layerSelect">
+      Substantially Complete
+    </button>
+  </div>
+
+  <div id="zoomer" class="container esri-widget">
+    <div class="zoomer-buttons" data-dojo-attach-point="zoomerType">
+      <div class="zoomer-button-entry">
+        <img src="img/btn_left.png" style="display:block;" alt="Button Left" />
+      </div>
+      <div class="zoomer-button-entry" data-dojo-attach-point="zoomerTypeCity" >
+        <img src="img/btn_city.png" style="display:block;" alt="Button City" />
+        <img src="img/btn_city_sel.png" style="display:none;" alt="Button City Selected" />
+      </div>
+      <div class="zoomer-button-entry" data-dojo-attach-point="zoomerTypeCounty" >
+        <img src="img/btn_county.png" style="display:block;" alt="Button County" />
+        <img src="img/btn_county_sel.png" style="display:none;" alt="Button County Selected" />
+      </div>
+      <div class="zoomer-button-entry" data-dojo-attach-point="zoomerTypeBoundary" >
+        <img src="img/btn_mpo.png" style="display:block;" alt="Button Boundary" />
+        <img src="img/btn_mpo_sel.png" style="display:none;" alt="Button Boundary Selected" />
+      </div>
+      <div class="zoomer-button-entry" data-dojo-attach-point="zoomerTypeLegislative" >
+        <img src="img/btn_legislature.png" style="display:block;" alt="Button Legislature" />
+        <img src="img/btn_legislature_sel.png" style="display:none;" alt="Button Legislature Selected" />
+      </div>
+      <div class="zoomer-button-entry" data-dojo-attach-point="zoomerTypeProject" >
+        <img src="img/btn_pmre.png" style="display:block;" alt="Button Project" />
+        <img src="img/btn_pmre_sel.png" style="display:none;" alt="Button Project Selected" />
+      </div>
+      <div class="zoomer-button-entry" data-dojo-attach-point="zoomerTypeDistrict" >
+        <img src="img/btn_region.png" style="display:block;" alt="Button Region" />
+        <img src="img/btn_region_sel.png" style="display:none;" alt="Button Region Selected" />
+      </div>
+      <div class="zoomer-button-entry" data-dojo-attach-point="zoomerTypeRoutes" >
+        <img src="img/btn_routes.png" style="display:block;" alt="Button Routes" />
+        <img src="img/btn_routes_sel.png" style="display:none;" alt="Button Routes Selected" />
+      </div>
+      <div class="zoomer-button-entry">
+        <img src="img/btn_right.png" style="display:block;" alt="Button Right" />
+      </div>
+    </div>
+
+  </div>
+
+  <script src="index.js"></script>
+</html>

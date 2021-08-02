@@ -1,0 +1,41 @@
+.jimu-widget-zoomer {
+  width: 100%;
+  height: 100%;
+  font-size: 14px;
+  color: black;
+  background-color: white;
+}
+
+.zoomer-buttons {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.zoomer-buttons .zoomer-button-entry {
+  float: left;
+}
+
+.zoomer-details {
+  clear: left;
+  margin-top: 5px;
+}
+
+.zoomer-commit {
+  clear: left;
+  margin-top: 5px;
+}
+
+p {
+  margin-bottom: 10px;
+}
+
+.zoomer-message {
+  left: 0;
+  bottom: 0;
+  position: absolute;
+  display: none;
+  z-index: 100;
+  background-color: lightgrey;
+  padding: 10px;
+  opacity: 0.8;
+}

@@ -1,0 +1,204 @@
+<div>
+  <div class="zoomer-buttons" data-dojo-attach-point="zoomerType">
+    <div class="zoomer-button-entry">
+      <img src="widgets/Zoomer/images/btn_left.png" style="display:block;" alt="Button Left" />
+    </div>
+    <div class="zoomer-button-entry" data-dojo-attach-point="zoomerTypeCity" style="display:none;">
+      <img src="widgets/Zoomer/images/btn_city.png" style="display:block;" alt="Button City" />
+      <img src="widgets/Zoomer/images/btn_city_sel.png" style="display:none;" alt="Button City Selected" />
+    </div>
+    <div class="zoomer-button-entry" data-dojo-attach-point="zoomerTypeCounty" style="display:none;">
+      <img src="widgets/Zoomer/images/btn_county.png" style="display:block;" alt="Button County" />
+      <img src="widgets/Zoomer/images/btn_county_sel.png" style="display:none;" alt="Button County Selected" />
+    </div>
+    <div class="zoomer-button-entry" data-dojo-attach-point="zoomerTypeBoundary" style="display:none;">
+      <img src="widgets/Zoomer/images/btn_mpo.png" style="display:block;" alt="Button Boundary" />
+      <img src="widgets/Zoomer/images/btn_mpo_sel.png" style="display:none;" alt="Button Boundary Selected" />
+    </div>
+    <div class="zoomer-button-entry" data-dojo-attach-point="zoomerTypeLegislative" style="display:none;">
+      <img src="widgets/Zoomer/images/btn_legislature.png" style="display:block;" alt="Button Legislature" />
+      <img src="widgets/Zoomer/images/btn_legislature_sel.png" style="display:none;" alt="Button Legislature Selected" />
+    </div>
+    <div class="zoomer-button-entry" data-dojo-attach-point="zoomerTypeProject" style="display:none;">
+      <img src="widgets/Zoomer/images/btn_pmre.png" style="display:block;" alt="Button Project" />
+      <img src="widgets/Zoomer/images/btn_pmre_sel.png" style="display:none;" alt="Button Project Selected" />
+    </div>
+    <div class="zoomer-button-entry" data-dojo-attach-point="zoomerTypeDistrict" style="display:none;">
+      <img src="widgets/Zoomer/images/btn_region.png" style="display:block;" alt="Button Region" />
+      <img src="widgets/Zoomer/images/btn_region_sel.png" style="display:none;" alt="Button Region Selected" />
+    </div>
+    <div class="zoomer-button-entry" data-dojo-attach-point="zoomerTypeRoutes" style="display:none;">
+      <img src="widgets/Zoomer/images/btn_routes.png" style="display:block;" alt="Button Routes" />
+      <img src="widgets/Zoomer/images/btn_routes_sel.png" style="display:none;" alt="Button Routes Selected" />
+    </div>
+    <div class="zoomer-button-entry">
+      <img src="widgets/Zoomer/images/btn_right.png" style="display:block;" alt="Button Right" />
+    </div>
+  </div>
+  
+  <div class="zoomer-details" data-dojo-attach-point="zoomerDefault">
+    <p>${nls.selectZoomMode}</p>
+  </div>
+  
+  <div class="zoomer-details" data-dojo-attach-point="zoomerCityDetails">
+    <p>${nls.cityZoom}</p>
+    <table>
+      <tr>
+        <th><label for="selectCity">${nls.city}</label></th>
+        <td><select id="selectCity" data-dojo-attach-point="selectCity" data-dojo-type="dijit/form/Select"></select></td>
+      </tr>
+      <tr>
+        <th><label for="textAddress">${nls.address}</label></th>
+        <td><input id="textAddress" type="text" value="" data-dojo-type="dijit/form/TextBox" /></td>
+      </tr>
+    </table>
+  </div>
+  
+  <div class="zoomer-details" data-dojo-attach-point="zoomerCountyDetails">
+    <p>${nls.countyZoom}</p>
+    <p>
+    <label for="selectCounty">${nls.county}</label>
+    <select id="selectCounty" data-dojo-type="dijit/form/Select">
+      <option value="1">Beaver</option>
+      <option value="3">Box Elder</option>
+      <option value="5">Cache</option>
+      <option value="7">Carbon</option>
+      <option value="9">Daggett</option>
+      <option value="11">Davis</option>
+      <option value="13">Duchesne</option>
+      <option value="15">Emery</option>
+      <option value="17">Garfield</option>
+      <option value="19">Grand</option>
+      <option value="21">Iron</option>
+      <option value="23">Juab</option>
+      <option value="25">Kane</option>
+      <option value="27">Millard</option>
+      <option value="29">Morgan</option>
+      <option value="31">Piute</option>
+      <option value="33">Rich</option>
+      <option value="35">Salt Lake</option>
+      <option value="37">San Juan</option>
+      <option value="39">Sanpete</option>
+      <option value="41">Sevier</option>
+      <option value="43">Summit</option>
+      <option value="45">Tooele</option>
+      <option value="47">Uintah</option>
+      <option value="49">Utah</option>
+      <option value="51">Wasatch</option>
+      <option value="53">Washington</option>
+      <option value="55">Wayne</option>
+      <option value="57">Weber</option>
+    </select>
+    </p>
+  </div>
+  
+  <div class="zoomer-details" data-dojo-attach-point="zoomerBoundaryDetails">
+    <p>${nls.boundaryZoom}</p>
+    <p>
+      <input type="radio" name="radioBoundaryZoom" id="radioBoundaryUA" data-dojo-attach-point="radioBoundaryUA" value="UA" /><label for="radioBoundaryUA">${nls.urbanArea}</label><br />
+      <input type="radio" name="radioBoundaryZoom" id="radioBoundaryUCSU" data-dojo-attach-point="radioBoundaryUCSU" value="UCSU" /><label for="radioBoundaryUCSU">${nls.urbanClusterSmallUrban}</label><br />
+      <input type="radio" name="radioBoundaryZoom" id="radioBoundaryMPO" data-dojo-attach-point="radioBoundaryMPO" value="MPO" /><label for="radioBoundaryMPO">${nls.metropolitanPlanningOrganization}</label><br />
+      <input type="radio" name="radioBoundaryZoom" id="radioBoundaryRPO" data-dojo-attach-point="radioBoundaryRPO" value="RPO" /><label for="radioBoundaryRPO">${nls.ruralPlanningOrganization}</label><br />
+    </p>
+    <p data-dojo-attach-point="boundaryUA" style="display:none;">
+      <select id="selectBoundaryUA" data-dojo-attach-point="selectBoundaryUA" data-dojo-type="dijit/form/Select"></select>
+    </p>
+    <p data-dojo-attach-point="boundaryUCSU" style="display:none;">
+      <select id="selectBoundaryUCSU" data-dojo-attach-point="selectBoundaryUCSU" data-dojo-type="dijit/form/Select"></select>
+    </p>
+    <p data-dojo-attach-point="boundaryMPO" style="display:none;">
+      <select id="selectBoundaryMPO" data-dojo-attach-point="selectBoundaryMPO" data-dojo-type="dijit/form/Select"></select>
+    </p>
+    <p data-dojo-attach-point="boundaryRPO" style="display:none;">
+      <select id="selectBoundaryRPO" data-dojo-attach-point="selectBoundaryRPO" data-dojo-type="dijit/form/Select"></select>
+    </p>
+  </div>
+  
+  <div class="zoomer-details" data-dojo-attach-point="zoomerLegislativeDetails">
+    <p>${nls.legislativeZoom}</p>
+    <p>
+      <select id="selectLegislative" data-dojo-attach-point="selectLegislative" data-dojo-type="dijit/form/Select"></select>
+    </p>
+  </div>
+  
+  <div class="zoomer-details" data-dojo-attach-point="zoomerProjectDetails">
+    <p>${nls.projectZoom}</p>
+    <p>
+      <input type="radio" name="radioProjectZoom" id="radioProgramManager" data-dojo-attach-point="radioProgramManager" value="programManager" /><label for="radioProgramManager">${nls.programManager}</label><br />
+      <input type="radio" name="radioProjectZoom" id="radioUDOTResidentEngineer" data-dojo-attach-point="radioUDOTResidentEngineer" value="UDOTResidentEngineer" /><label for="radioUDOTResidentEngineer">${nls.UDOTResidentEngineer}</label><br />
+      <input type="radio" name="radioProjectZoom" id="radioConsultantResidentEngineer" data-dojo-attach-point="radioConsultantResidentEngineer" value="consultantResidentEngineer" /><label for="radioConsultantResidentEngineer">${nls.consultantResidentEngineer}</label><br />
+    </p>
+    <p data-dojo-attach-point="projectProgramManager" style="display:none;">
+      <select id="selectProjectProgramManager" data-dojo-attach-point="selectProjectProgramManager" data-dojo-type="dijit/form/Select"></select>
+    </p>
+    <p data-dojo-attach-point="projectUDOTResidentEngineer" style="display:none;">
+      <select id="selectProjectUDOTResidentEngineer" data-dojo-attach-point="selectProjectUDOTResidentEngineer" data-dojo-type="dijit/form/Select"></select>
+    </p>
+    <p data-dojo-attach-point="projectConsultantResidentEngineer" style="display:none;">
+      <select id="selectProjectConsultantResidentEngineer" data-dojo-attach-point="selectProjectConsultantResidentEngineer" data-dojo-type="dijit/form/Select"></select>
+    </p>
+  </div>
+  
+  <div class="zoomer-details" data-dojo-attach-point="zoomerDistrictDetails">
+    <p>${nls.districtZoom}</p>
+    <table>
+      <tr>
+        <th><label for="selectDistrict">${nls.region}</label></th>
+        <td><select id="selectDistrict" data-dojo-attach-point="selectDistrict" data-dojo-type="dijit/form/Select">
+          <option value="1">Region 1</option>
+          <option value="2">Region 2</option>
+          <option value="3">Region 3</option>
+          <option value="4">Region 4</option>
+        </select></td>
+      </tr>
+      <tr>
+        <th><label for="selectStation">${nls.station}</label></th>
+        <td><select id="selectStation" data-dojo-attach-point="selectStation" data-dojo-type="dijit/form/Select"></select></td>
+      </tr>
+    </table>
+  </div>
+  
+  <div class="zoomer-details" data-dojo-attach-point="zoomerRoutesDetails">
+    <p>${nls.routesZoom}</p>
+    <table>
+      <tr data-dojo-attach-point="routeRouteRow">
+        <th><label for="selectRoutes">${nls.route}</label></th>
+        <td>
+          <select id="selectRoutes" data-dojo-attach-point="selectRoutes" data-dojo-type="dijit/form/Select"></select>
+          <button disabled="disabled" data-dojo-attach-point="buttonRoutesFilterByPolygon" data-dojo-type="dijit/form/Button">${nls.btnFilterByPolygon}</button>
+        </td>
+      </tr>
+      <tr data-dojo-attach-point="routeInterchangeRow" style="display:none;">
+        <th><label for="selectInterchange">${nls.interchange}</label></th>
+        <td><select id="selectInterchange" data-dojo-attach-point="selectInterchange" data-dojo-type="dijit/form/Select"></select></td>
+      </tr>
+      <tr data-dojo-attach-point="routeRampRow" style="display:none;">
+        <th><label for="selectRamp">${nls.ramp}</label></th>
+        <td><select id="selectRamp" data-dojo-attach-point="selectRamp" data-dojo-type="dijit/form/Select"></select></td>
+      </tr>
+    </table>
+  </div>
+  
+  <div class="zoomer-details" data-dojo-attach-point="zoomerShareDetails">
+    <p>${nls.shareExtent}</p>
+    <p><input
+      id="textShare"
+      type="text"
+      value=""
+      data-dojo-type="dijit/form/TextBox"
+      style="width:300px;" />
+    </p>
+  </div>
+  
+  <div class="zoomer-commit" data-dojo-attach-point="zoomerCommit">
+    <div data-dojo-attach-point="interfaceAttributeTable" style="display:none;">
+      <input id="checkFilter" data-dojo-type="dijit/form/CheckBox" value="select" checked="checked" /><label for="checkFilter">${nls.filterdata}</label>
+    </div>
+    <button data-dojo-attach-point="buttonZoom" data-dojo-type="dijit/form/Button">${nls.btnZoom}</button>
+    <button data-dojo-attach-point="buttonReset" data-dojo-type="dijit/form/Button">${nls.btnReset}</button>
+    <button data-dojo-attach-point="buttonShare" data-dojo-type="dijit/form/Button">${nls.btnShare}</button>
+  </div>
+  
+  <div class="zoomer-message" data-dojo-attach-point="zoomerMessage" style="display:none;">
+  </div>
+</div>

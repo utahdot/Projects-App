@@ -1,0 +1,101 @@
+<div style="width:100%;" class="jimu-widget-zoomer-setting">
+  <h2>${nls.general}</h2>
+  <div>
+    <input id="checkInterfaceAttributeTable" data-dojo-type="dijit/form/CheckBox" value="select" />
+    <label for="checkInterfaceAttributeTable">${nls.linkToAttributeTable}</label>
+  </div>
+  
+  <div>
+    <input id="checkProvoEasteregg" data-dojo-type="dijit/form/CheckBox" value="select" />
+    <label for="checkProvoEasteregg">${nls.eastereggProvo}</label>
+  </div>
+  
+  <div>
+    <input id="checkUdotPmAndRe" data-dojo-type="dijit/form/CheckBox" value="select" />
+    <label for="checkUdotPmAndRe">${nls.udotPmAndRe}</label>
+  </div>
+  
+  <table>
+    <tr>
+      <th><label for="textSpatialReference">${nls.spatialReference}</label></th>
+      <td>
+        <input
+          id="textSpatialReference" data-dojo-type="dijit/form/NumberTextBox"
+          data-dojo-props="constraints:{min:2000,max:104970,places:0},invalidMessage:'Please enter a spatial reference value using the wkid.',rangeMessage:'Invalid spatial reference.'"
+          style="width:100px;" />
+      </td>
+    </tr>
+  </table>
+  
+  <h2>${nls.agrc}</h2>
+    <table>
+      <tr>
+        <th><label for="textAGRCAPIURL">${nls.agrcAPIURL}</label></th>
+        <td><input id="textAGRCAPIURL" data-dojo-type="dijit/form/TextBox" style="width:600px;" /></td>
+      </tr>
+      <tr>
+        <th><label for="textAGRCAPIKey">${nls.agrcAPIKey}</label></th>
+        <td><input id="textAGRCAPIKey" data-dojo-type="dijit/form/TextBox" style="width:200px;" /></td>
+      </tr>
+      <tr>
+        <th><label for="textAGRCAPICityFeatureClass">${nls.agrcAPICityFeatureClass}</label></th>
+        <td><input id="textAGRCAPICityFeatureClass" data-dojo-type="dijit/form/TextBox" style="width:400px;" /></td>
+      </tr>
+      <tr>
+        <th><label for="textAGRCAPICountyFeatureClass">${nls.agrcAPICountyFeatureClass}</label></th>
+        <td><input id="textAGRCAPICountyFeatureClass" data-dojo-type="dijit/form/TextBox" style="width:400px;" /></td>
+      </tr>
+      <tr>
+        <th><label for="textAGRCAPIStateHouseFeatureClass">${nls.agrcAPIStateHouseFeatureClass}</label></th>
+        <td><input id="textAGRCAPIStateHouseFeatureClass" data-dojo-type="dijit/form/TextBox" style="width:400px;" /></td>
+      </tr>
+      <tr>
+        <th><label for="textAGRCAPIStateSenateFeatureClass">${nls.agrcAPIStateSenateFeatureClass}</label></th>
+        <td><input id="textAGRCAPIStateSenateFeatureClass" data-dojo-type="dijit/form/TextBox" style="width:400px;" /></td>
+      </tr>
+      <tr>
+        <th><label for="textAGRCAPIUSCongressFeatureClass">${nls.agrcAPIUSCongressFeatureClass}</label></th>
+        <td><input id="textAGRCAPIUSCongressFeatureClass" data-dojo-type="dijit/form/TextBox" style="width:400px;" /></td>
+      </tr>
+    </table>
+
+  <h2>${nls.bitly}</h2>
+    <div>
+      <input id="checkBitlyUse" data-dojo-type="dijit/form/CheckBox" value="select" />
+      <label for="checkBitlyUse">${nls.bitlyUse}</label>
+    </div>
+    
+    <table>
+      <tr>
+        <th><label for="textBitlyAPIKey">${nls.bitlyAPIKey}</label></th>
+        <td><input id="textBitlyAPIKey" data-dojo-type="dijit/form/TextBox" style="width:400px;" /></td>
+      </tr>
+      <tr>
+        <th><label for="textBitlyBaseURL">${nls.bitlyBaseURL}</label></th>
+        <td>${nls.bitlyBaseURLDesc}<br /><input id="textBitlyBaseURL" data-dojo-type="dijit/form/TextBox" style="width:600px;" /></td>
+      </tr>
+    </table>
+
+  <h2>${nls.proxy}</h2>
+    <div>
+      <input id="checkProxyMapsUDOT" data-dojo-type="dijit/form/CheckBox" value="select" />
+      <label for="checkProxyMapsUDOT">${nls.proxyMapsUDOT}</label>
+    </div>
+
+    <div>
+      <input id="checkProxyBitly" data-dojo-type="dijit/form/CheckBox" value="select" />
+      <label for="checkProxyBitly">${nls.proxyBitly}</label>
+    </div>
+
+    <div>
+      <input id="checkProxyAGRC" data-dojo-type="dijit/form/CheckBox" value="select" />
+      <label for="checkProxyAGRC">${nls.proxyAGRC}</label>
+    </div>
+
+    <table>
+      <tr>
+        <th><label for="textProxyUrl">${nls.proxyUrl}</label></th>
+        <td><input id="textProxyUrl" data-dojo-type="dijit/form/TextBox" style="width:600px;" /></td>
+      </tr>
+    </table>
+</div>
