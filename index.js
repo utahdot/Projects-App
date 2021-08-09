@@ -127,12 +127,14 @@ require([
   const listExpand = new Expand({
     view: view,
     expanded: true,
+    expandIconClass: "esri-icon-legend",
     content: document.getElementById("layerQuery"),
     group: "top-left"
   });
   const zoomerExpand = new Expand({
     view: view,
     expanded: false,
+    expandIconClass: "esri-icon-zoom-to-object",
     content:document.getElementById("zoomer"),
     group: "top-left"
   });
