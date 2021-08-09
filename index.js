@@ -1,6 +1,5 @@
 /**
  * TODO:
-
  * Zoomer
  * Search
  * Inset Map Location
@@ -132,16 +131,16 @@ require([
     content: document.getElementById("layerQuery"),
     group: "top-left"
   });
-  const zoomerExpand = new Expand({
-    view: view,
-    expanded: false,
-    expandIconClass: "esri-icon-zoom-to-object",
-    content:document.getElementById("zoomer"),
-    group: "top-left"
-  });
+  // const zoomerExpand = new Expand({
+  //   view: view,
+  //   expanded: false,
+  //   expandIconClass: "esri-icon-zoom-to-object",
+  //   content:document.getElementById("zoomer"),
+  //   group: "top-left"
+  // });
 
   
-  view.ui.add([listExpand, zoomerExpand], "top-left");
+  view.ui.add([listExpand], "top-left");
 
 
   /**Zoomer Code */
