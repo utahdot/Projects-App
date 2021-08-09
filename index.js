@@ -52,7 +52,7 @@ require([
         "PROJ_TYP_NM <> 'Studies' AND (PIN_STAT_NM = 'Under Construction')",
       color: "green",
     },
-    SunstantiallyComplete: {
+    SubstantiallyComplete: {
       definitionExpression:
         "PROJ_TYP_NM <> 'Studies' AND (PIN_STAT_NM = 'Substantially Compl')",
       color: "orange",
