@@ -32,7 +32,7 @@ require([
         "PIN_STAT_NM = 'Physically Complete' OR PIN_STAT_NM = 'Contract Complete' OR PIN_STAT_NM = 'Region Review' OR PIN_STAT_NM = 'Central Review' OR PIN_STAT_NM = 'Contract Closed Out' OR PIN_STAT_NM = 'Close Out' OR PIN_STAT_NM = 'Closed'",
       color: "red",
     },
-    "In Design": {
+    InDesign: {
       definitionExpression:
         "PROJ_TYP_NM <> 'Studies' AND ( PIN_STAT_NM = 'Active' OR PIN_STAT_NM = 'Concept Scoping' OR PIN_STAT_NM = 'Advertised' OR PIN_STAT_NM = 'Awarded' OR PIN_STAT_NM = 'Concept Active' OR PIN_STAT_NM = 'Concept Cmplt' OR PIN_STAT_NM = 'Scoping')",
       color: "yellow",
@@ -52,12 +52,12 @@ require([
         "PROJ_TYP_NM <> 'Studies' AND (PIN_STAT_NM = 'Under Construction')",
       color: "green",
     },
-    "Substantially Complete": {
+    SunstantiallyComplete: {
       definitionExpression:
         "PROJ_TYP_NM <> 'Studies' AND (PIN_STAT_NM = 'Substantially Compl')",
       color: "orange",
     },
-    "All Projects": {
+    AllProjects: {
       definitionExpression: "1=1",
       color: "purple",
     },
@@ -155,9 +155,7 @@ require([
   selectorClass.forEach((e) => {
     e.addEventListener("click", swapLayer);
   });
-  const featureFilter = {
-    where: "1=1"
-  }
+
   function swapLayer(e) {
     const query = layerQueries[e.target.id].definitionExpression;
     const color = layerQueries[e.target.id].color;
@@ -168,4 +166,6 @@ require([
     pointsLayer.renderer.symbol.color = color;
     linesLayer.definitionExpression = query;
   };
+
+
 });

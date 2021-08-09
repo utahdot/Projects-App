@@ -9,3 +9,12 @@ body, #viewDiv {
     display: flex;
     flex-direction: row;
   }
+
+  #layerQuery{
+  width: max-content;
+  padding: auto;
+  }
+
+  label{
+  margin: 5px;
+  }
