@@ -8,16 +8,14 @@
  */
 
 require([
-  // "dijit/layout/BorderContainer",
-  // "dijit/layout/ContentPane",
+  "esri/widgets/Search",
   "esri/widgets/FeatureTable",
   "esri/widgets/Expand",
   "esri/layers/FeatureLayer",
   "esri/Map",
   "esri/views/MapView",
 ], function (
-  // BorderContainer,
-  // ContentPane,
+  Search,
   FeatureTable,
   Expand,
   FeatureLayer,
@@ -123,6 +121,26 @@ require([
     pointsView = layer;
   });
 
+  const searchWidget = new Search({
+    view: view,
+    allPlaceholder: "Search Project or Location",
+    sources:[
+      {
+        layer: linesLayer,
+        searchFields: ["PIN","PIN_DESC"],
+        displayField: "PIN_DESC",
+        exactMatch: false,
+        // outFields: ["PIN","PIN_DESC"],
+        name: "UDOT Projects",
+        placeholder: "example: 3708"
+      },
+    ]
+  });
+  // Adds the search widget below other elements in
+  // the top left corner of the view
+  view.ui.add(searchWidget, {
+    position: "top-right"
+  });
 
   const listExpand = new Expand({
     view: view,
