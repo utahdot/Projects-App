@@ -67,6 +67,7 @@ require([
   let linesView;
   const linesLayer = new FeatureLayer({
     url: "https://maps.udot.utah.gov/central/rest/services/EPM/EPM_All_Projects_as_Lines/MapServer/0",
+    title: "EPM Projects",
     definitionExpression:
         "PROJ_TYP_NM <> 'Studies' AND ( PIN_STAT_NM = 'STIP' OR PIN_STAT_NM = 'Funding' OR (PIN_STAT_NM = 'Proposed' AND REGION_PRTY <999))",
     renderer: {
