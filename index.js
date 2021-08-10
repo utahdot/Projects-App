@@ -60,6 +60,30 @@ require([
     },
   };
 
+  const municipalBoundaries = new FeatureLayer({
+    url: "https://services1.arcgis.com/99lidPhWCzftIe9K/arcgis/rest/services/UtahMunicipalBoundaries/FeatureServer/0",
+    title: "Municipalities"
+  }); 
+
+  const countyBoundaries = new FeatureLayer({
+    url: "https://services1.arcgis.com/99lidPhWCzftIe9K/arcgis/rest/services/UtahCountyBoundaries/FeatureServer/0",
+    title: "Counties"
+  }); 
+
+  const USCongressDistricts2012 = new FeatureLayer({
+    url: "https://services1.arcgis.com/99lidPhWCzftIe9K/arcgis/rest/services/USCongressDistricts2012/FeatureServer/0",
+    title: " 2012 US Congress Districts"
+  }); 
+
+  const UtahSenateDistricts2012 = new FeatureLayer({
+    url: "https://services1.arcgis.com/99lidPhWCzftIe9K/arcgis/rest/services/UtahSenateDistricts2012/FeatureServer/0",
+    title: "2012 Utah Senate Districts"
+  }); 
+
+  const UtahHouseDistricts2012 = new FeatureLayer({
+    url: "https://services1.arcgis.com/99lidPhWCzftIe9K/arcgis/rest/services/UtahHouseDistricts2012/FeatureServer/0",
+    title: "2012 Utah House Districts"
+  });
 
   let linesView;
   const linesLayer = new FeatureLayer({
@@ -120,7 +144,7 @@ require([
   view.whenLayerView(pointsLayer).then(function(layer){
     pointsView = layer;
   });
-
+  UtahSenateDistricts2012
   const searchWidget = new Search({
     view: view,
     allPlaceholder: "Search Project or Location",
@@ -128,12 +152,49 @@ require([
       {
         layer: linesLayer,
         searchFields: ["PIN","PIN_DESC"],
-        displayField: "PIN_DESC",
+        suggestionTemplate:"{PIN}: {PIN_DESC}",
+        displayField: "PIN",
         exactMatch: false,
         // outFields: ["PIN","PIN_DESC"],
         name: "UDOT Projects",
-        placeholder: "example: 3708"
+        placeholder: "example: 16716"
+      },{
+        layer: municipalBoundaries,
+        searchFields: ["NAME", "SHORTDESC"],
+        displayField: "NAME",
+        exactMatch: false,
+        name: "Municipal Boundaries",
+        placeholder: "example: Salt Lake City"
+      },{
+        layer:countyBoundaries,
+        searchFields: ["NAME"],
+        displayField: "NAME",
+        exactMatch: false,
+        name: "County Boundaries",
+        placeholder: "example: Salt Lake County"
+      },{
+        layer:USCongressDistricts2012,
+        searchFields: ["DISTRICT"],
+        displayField: "DISTRICT",
+        exactMatch: false,
+        name: "Congressional Districts",
+        placeholder: "example: 2"
+      },{
+        layer:UtahSenateDistricts2012,
+        searchFields: ["DIST"],
+        displayField: "DIST",
+        exactMatch: false,
+        name: "Utah Senate Districts",
+        placeholder: "example: 27"
+      },{
+        layer:UtahHouseDistricts2012,
+        searchFields: ["DIST"],
+        displayField: "DIST",
+        exactMatch: false,
+        name: "Utah House Districts",
+        placeholder: "example: 61"
       },
+      
     ]
   });
   // Adds the search widget below other elements in
