@@ -1,13 +1,12 @@
 /**
  * TODO:
  * Zoomer
- * Search
+ * popups
  * Inset Map Location
- * style layer select
- * Table
  */
 
 require([
+  "esri/widgets/Locate",
   "esri/symbols/SimpleMarkerSymbol",
   "esri/layers/support/LabelClass",
   "esri/widgets/Search",
@@ -17,6 +16,7 @@ require([
   "esri/Map",
   "esri/views/MapView",
 ], function (
+  Locate,
   SimpleMarkerSymbol,
   LabelClass,
   Search,
@@ -257,11 +257,18 @@ require([
       
     ]
   });
+  const locateWidget = new Locate({
+    view: view,   // Attaches the Locate button to the view
+    // graphic: new Graphic({
+    //   symbol: { type: "simple-marker" }  // overwrites the default symbol used for the
+    //   // graphic placed at the location of the user when found
+    // })
+  });
+  
+  
   // Adds the search widget below other elements in
   // the top left corner of the view
-  view.ui.add(searchWidget, {
-    position: "top-right"
-  });
+  view.ui.add([searchWidget, locateWidget], "top-right");
 
   const listExpand = new Expand({
     view: view,
