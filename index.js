@@ -8,6 +8,8 @@
  */
 
 require([
+  "esri/symbols/SimpleMarkerSymbol",
+  "esri/layers/support/LabelClass",
   "esri/widgets/Search",
   "esri/widgets/FeatureTable",
   "esri/widgets/Expand",
@@ -15,6 +17,8 @@ require([
   "esri/Map",
   "esri/views/MapView",
 ], function (
+  SimpleMarkerSymbol,
+  LabelClass,
   Search,
   FeatureTable,
   Expand,
@@ -90,10 +94,40 @@ require([
     title: "UDOT Region Boundaries"
   });
 
+  const mpLabel = new LabelClass({
+    labelExpressionInfo: { expression: "$feature.Measure" },
+    symbol: {
+      type: "text", // autocasts as new TextSymbol()
+      color: "black",
+      haloSize: 1,
+      haloColor: "white",
+      font: {
+        // autocast as new Font()
+        family: "Ubuntu Mono",
+        size: 9,
+        weight: "bold",
+      },
+    },
+    labelPlacement: "center-center",
+  });
+
+  const selectSymbol = new SimpleMarkerSymbol({
+    color: "lime",
+    outline: {
+      color: [128, 128, 128, 0.5],
+      width: "0.6px",
+    },
+  });
+
   let mpView;
   const mpLayer = new FeatureLayer({
     url: "https://maps.udot.utah.gov/randh/rest/services/ALRS_DT/Mile_Point_Measure_PNT_ALRS_OPENDATA/MapServer/0",
-    title: "UDOT Mileposts"
+    title: "UDOT Mileposts",
+    labelingInfo: mpLabel,
+    renderer: {
+      type: "simple",
+      symbol: selectSymbol,
+    }
   });
 
   let linesView;
@@ -158,9 +192,7 @@ require([
   });
 
   view.whenLayerView(mpLayer).then(function(layer){
-    mpView = layer;
-    mpView.visible=false;
-  
+    mpView = layer;  
   });
   function toggleMP(){
     mpView.visible = !mpView.visible;
