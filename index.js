@@ -183,7 +183,7 @@ require([
         if (view.extent) {
           // Filter and show only the visible features in the feature table
           featureTable.filterGeometry = view.extent;
-        }
+        };
       });
     });
   });
@@ -193,9 +193,14 @@ require([
 
   view.whenLayerView(mpLayer).then(function(layer){
     mpView = layer;  
+    toggleMP();
   });
   function toggleMP(){
-    mpView.visible = !mpView.visible;
+    if(mpCheck.checked){
+      mpView.visible = true;
+    }else{
+      mpView.visible = false;
+    };
   }
   
   const searchWidget = new Search({
@@ -290,19 +295,20 @@ require([
 
 
   /**Zoomer Code */
-  const zoomButtons = document.querySelectorAll(".zoomer-button-entry");
+  // const zoomButtons = document.querySelectorAll(".zoomer-button-entry");
 
-  zoomButtons.forEach((e) => {
-    e.addEventListener("click", toggleZoomTool);
-  });
+  // zoomButtons.forEach((e) => {
+  //   e.addEventListener("click", toggleZoomTool);
+  // });
 
-  function toggleZoomTool(event){
-    console.log(event)
-  }
+  // function toggleZoomTool(event){
+  //   console.log(event)
+  // }
 
   selectorClass.forEach((e) => {
     e.addEventListener("click", swapLayer);
   });
+
   mpCheck.addEventListener("click", toggleMP);
 
   function swapLayer(e) {
