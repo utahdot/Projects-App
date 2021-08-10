@@ -274,10 +274,10 @@ require([
     expanded: false,
     expandIconClass: "esri-icon-collection",
     content: basemapGallery,
-    group: "bottom-right"
+    group: "top-left"
   });
 
-  view.ui.add([searchWidget, locateWidget, basemapExpand], "top-right");
+  view.ui.add([searchWidget], "top-right");
 
   const listExpand = new Expand({
     view: view,
@@ -287,7 +287,7 @@ require([
     group: "top-left"
   });
 
-  view.ui.add(listExpand, "top-left");
+  view.ui.add([listExpand, locateWidget, basemapExpand], "top-left");
 
   // const zoomerExpand = new Expand({
   //   view: view,
