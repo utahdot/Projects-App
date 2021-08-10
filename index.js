@@ -22,7 +22,8 @@ require([
   Map,
   MapView
 ) {
-  selectorClass = document.querySelectorAll(".layerSelect");
+  let selectorClass = document.querySelectorAll(".layerSelect");
+  let mpCheck = document.querySelector("#mpCheck");
   const layerQueries = {
     Finished: {
       definitionExpression:
@@ -84,6 +85,16 @@ require([
     url: "https://services1.arcgis.com/99lidPhWCzftIe9K/arcgis/rest/services/UtahHouseDistricts2012/FeatureServer/0",
     title: "2012 Utah House Districts"
   });
+  const RegionBoundaries = new FeatureLayer({
+    url: "https://maps.udot.utah.gov/arcgis/rest/services/UDOT_Regions/MapServer/1",
+    title: "UDOT Region Boundaries"
+  });
+
+  let mpView;
+  const mpLayer = new FeatureLayer({
+    url: "https://maps.udot.utah.gov/randh/rest/services/ALRS_DT/Mile_Point_Measure_PNT_ALRS_OPENDATA/MapServer/0",
+    title: "UDOT Mileposts"
+  });
 
   let linesView;
   const linesLayer = new FeatureLayer({
@@ -111,7 +122,7 @@ require([
 
   const map = new Map({
     basemap: "gray",
-    layers: [linesLayer, pointsLayer],
+    layers: [linesLayer, pointsLayer,mpLayer],
   });
 
   const view = new MapView({
@@ -129,6 +140,7 @@ require([
       layer: linesLayer,
       view: view,
       container: document.getElementById("tableDiv")
+      
     });
 
     linesLayer.watch("loaded", () => {
@@ -144,7 +156,16 @@ require([
   view.whenLayerView(pointsLayer).then(function(layer){
     pointsView = layer;
   });
-  UtahSenateDistricts2012
+
+  view.whenLayerView(mpLayer).then(function(layer){
+    mpView = layer;
+    mpView.visible=false;
+  
+  });
+  function toggleMP(){
+    mpView.visible = !mpView.visible;
+  }
+  
   const searchWidget = new Search({
     view: view,
     allPlaceholder: "Search Project or Location",
@@ -193,6 +214,13 @@ require([
         exactMatch: false,
         name: "Utah House Districts",
         placeholder: "example: 61"
+      },{
+        layer:RegionBoundaries,
+        searchFields: ["NAME"],
+        displayField: "NAME",
+        exactMatch: false,
+        name: "UDOT Region Boundaries",
+        placeholder: "example: Region 3"
       },
       
     ]
@@ -236,6 +264,7 @@ require([
   selectorClass.forEach((e) => {
     e.addEventListener("click", swapLayer);
   });
+  mpCheck.addEventListener("click", toggleMP);
 
   function swapLayer(e) {
     const query = layerQueries[e.target.id].definitionExpression;
