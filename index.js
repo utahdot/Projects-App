@@ -6,6 +6,7 @@
  */
 
 require([
+  "esri/widgets/BasemapGallery",
   "esri/widgets/Locate",
   "esri/symbols/SimpleMarkerSymbol",
   "esri/layers/support/LabelClass",
@@ -16,6 +17,7 @@ require([
   "esri/Map",
   "esri/views/MapView",
 ], function (
+  BasemapGallery,
   Locate,
   SimpleMarkerSymbol,
   LabelClass,
@@ -97,12 +99,11 @@ require([
   const mpLabel = new LabelClass({
     labelExpressionInfo: { expression: "$feature.Measure" },
     symbol: {
-      type: "text", // autocasts as new TextSymbol()
+      type: "text", 
       color: "black",
       haloSize: 1,
       haloColor: "white",
       font: {
-        // autocast as new Font()
         family: "Ubuntu Mono",
         size: 9,
         weight: "bold",
@@ -142,7 +143,6 @@ require([
     },
   });
 
-
   let pointsView;
   const pointsLayer = new FeatureLayer({
     url: "https://maps.udot.utah.gov/central/rest/services/EPM/EPM_AllProjectsPoints/MapServer/0",
@@ -161,15 +161,14 @@ require([
 
   const view = new MapView({
     map: map,
-    center: [-111.891, 40.7608], // Longitude, latitude
-    zoom: 13, // Zoom level
-    container: "viewDiv", // Div element
+    center: [-111.891, 40.7608],
+    zoom: 13,
+    container: "viewDiv"
   });
   view.popup.defaultPopupTemplateEnabled = true;
 
   view.whenLayerView(linesLayer).then(function(layer){
     linesView = layer;
-
     const featureTable = new FeatureTable({
       layer: linesLayer,
       view: view,
@@ -187,6 +186,7 @@ require([
       });
     });
   });
+
   view.whenLayerView(pointsLayer).then(function(layer){
     pointsView = layer;
   });
@@ -195,13 +195,14 @@ require([
     mpView = layer;  
     toggleMP();
   });
+
   function toggleMP(){
     if(mpCheck.checked){
       mpView.visible = true;
     }else{
       mpView.visible = false;
     };
-  }
+  };
   
   const searchWidget = new Search({
     view: view,
@@ -213,7 +214,6 @@ require([
         suggestionTemplate:"{PIN}: {PIN_DESC}",
         displayField: "PIN",
         exactMatch: false,
-        // outFields: ["PIN","PIN_DESC"],
         name: "UDOT Projects",
         placeholder: "example: 16716"
       },{
@@ -262,18 +262,22 @@ require([
       
     ]
   });
+
   const locateWidget = new Locate({
-    view: view,   // Attaches the Locate button to the view
-    // graphic: new Graphic({
-    //   symbol: { type: "simple-marker" }  // overwrites the default symbol used for the
-    //   // graphic placed at the location of the user when found
-    // })
+    view: view
   });
-  
-  
-  // Adds the search widget below other elements in
-  // the top left corner of the view
-  view.ui.add([searchWidget, locateWidget], "top-right");
+  const basemapGallery = new BasemapGallery({
+    view: view
+  });
+  const basemapExpand = new Expand({
+    view: view,
+    expanded: false,
+    expandIconClass: "esri-icon-collection",
+    content: basemapGallery,
+    group: "bottom-right"
+  });
+
+  view.ui.add([searchWidget, locateWidget, basemapExpand], "top-right");
 
   const listExpand = new Expand({
     view: view,
@@ -282,6 +286,9 @@ require([
     content: document.getElementById("layerQuery"),
     group: "top-left"
   });
+
+  view.ui.add(listExpand, "top-left");
+
   // const zoomerExpand = new Expand({
   //   view: view,
   //   expanded: false,
@@ -289,10 +296,6 @@ require([
   //   content:document.getElementById("zoomer"),
   //   group: "top-left"
   // });
-
-  
-  view.ui.add([listExpand], "top-left");
-
 
   /**Zoomer Code */
   // const zoomButtons = document.querySelectorAll(".zoomer-button-entry");
@@ -321,6 +324,5 @@ require([
     pointsLayer.renderer.symbol.color = color;
     linesLayer.definitionExpression = query;
   };
-
 
 });
