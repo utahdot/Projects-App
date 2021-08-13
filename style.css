@@ -9,12 +9,14 @@ body {
  #viewDiv {
     padding: 0;
     margin: 0;
-    height: 70%;
+    height: 100%;
     width: 100%;
   }
-  .container {
-    height: 30%;
+  #tableDiv {
+    height: 33%;
     width: 100%;
+    bottom:0;
+    position: absolute;
   }
   .zoomer-buttons{
     display: flex;
