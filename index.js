@@ -5,6 +5,7 @@
  * hide table
  * default columns
  * comma in pin number
+ * expand hover
  */
 
 require([
@@ -212,11 +213,7 @@ require([
   }
 
   function toggleTable() {
-    if (tableCheck.checked) {
-      tableDiv.style.visibility='visible';
-    } else {
-      tableDiv.style.visibility='hidden';
-    }
+      tableDiv.style.visibility = tableDiv.style.visibility == 'visible' ? 'hidden' : 'visible';
   }
 
 
@@ -298,7 +295,7 @@ require([
     group: "top-left",
   });
 
-  view.ui.add([searchWidget], "top-right");
+  view.ui.add([searchWidget, tableCheck], "top-right");
 
   const listExpand = new Expand({
     view: view,
