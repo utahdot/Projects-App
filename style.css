@@ -17,6 +17,7 @@ body {
     width: 100%;
     bottom:0;
     position: absolute;
+    visibility: visible;
   }
   .zoomer-buttons{
     display: flex;
