@@ -1,31 +1,3 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta
-      name="viewport"
-      content="initial-scale=1, maximum-scale=1,user-scalable=no"
-    />
-    <title>Identify Sample</title>
-    <link
-      rel="stylesheet"
-      href="https://js.arcgis.com/4.20/dijit/themes/claro/claro.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://js.arcgis.com/4.20/esri/themes/light/main.css"
-    />
-    <style>
-      html,
-      body {
-        height: 98%;
-        width: 98%;
-        margin: 0;
-        padding: 5px;
-      }
-    </style>
-    <script src="https://js.arcgis.com/4.20/"></script>
-    <script>
 var view, bldgResults, parcelResults, symbol;
 require([
   "esri/config",
@@ -203,37 +175,3 @@ function showFeature(feature) {
   feature.symbol = symbol;
   view.graphics.add(feature);
 }
-    </script>
-  </head>
-  <body class="claro">
-    Click the map to identify building and tax information.
-    <div
-      id="mapDiv"
-      style="width: 800px; height: 600px; border: 1px solid #000"
-    >
-      <div
-        id="tabs"
-        dojoType="dijit/layout/TabContainer"
-        style="
-          width: 385px;
-          height: 150px;
-          position: absolute;
-          top: -1000px;
-          left: -1000px;
-        "
-      >
-        <div
-          id="bldgTab"
-          dojoType="dijit/layout/ContentPane"
-          title="Buildings"
-        ></div>
-        <div
-          id="parcelTab"
-          dojoType="dijit/layout/ContentPane"
-          title="Tax Parcels"
-        ></div>
-      </div>
-    </div>
-  </body>
-</html>
-‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍

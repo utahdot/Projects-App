@@ -18,6 +18,8 @@ require([
   "esri/layers/FeatureLayer",
   "esri/Map",
   "esri/views/MapView",
+  "dijit/layout/ContentPane",
+  "dijit/layout/TabContainer",
 ], function (
   PopupTemplate,
   BasemapGallery,

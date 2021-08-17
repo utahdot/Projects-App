@@ -8,34 +8,67 @@
       rel="stylesheet"
       href="https://js.arcgis.com/4.20/esri/themes/light/main.css"
     />
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.20/dijit/themes/claro/claro.css"
+    />
     <script src="https://js.arcgis.com/4.20/"></script>
     <title>UDOT Projects App 2 - Demo</title>
   </head>
   <body>
-      <div id="viewDiv"></div>
-     
-        <div id="tableDiv"></div>
-        <div id="tableCheck" title="Toggle Table" class="esri-icon-table esri-widget--button esri-widget esri-interactive"></div>
-  
+    <div id="viewDiv"></div>
+    <div
+        id="tabs"
+        dojoType="dijit/layout/TabContainer"
+        
+      >
+    <div id="tableDiv"></div>
+    </div>
+    <div
+      id="tableCheck"
+      title="Toggle Table"
+      class="esri-icon-table esri-widget--button esri-widget esri-interactive"
+    ></div>
   </body>
   <div id="layerQuery" class="container esri-widget">
     <h2>Layers</h2>
-    <input class ="layerSelect" type="checkbox" id="Planned" value="Planned" checked>
-    <label for="Planned">Planned</label><br>
-    <input class = "layerSelect" type="checkbox" id="Finished" value="Finished">
-    <label for="Finished">Finished</label><br>
-    <input class = "layerSelect" type="checkbox" id="InDesign" value="InDesign">
-    <label for="InDesign">In Design</label><br>
-    <input class = "layerSelect" type="checkbox" id="Studies" value="Studies">
-    <label for="Studies">Studies</label><br>
-    <input class = "layerSelect" type="checkbox" id="Construction" value="Construction">
-    <label for="Construction">Construction</label><br>
-    <input class = "layerSelect" type="checkbox" id="SubstantiallyComplete" value="SubstantiallyComplete">
-    <label for="SubstantiallyComplete">Substantially Complete</label><br>
-    <input class = "layerSelect" type="checkbox" id="AllProjects" value="AllProjects">
-    <label for="AllProjects">All Projects</label><br>
-    <input class = "layerSelect" type="checkbox" id="mp" value = "mp">
-    <label for="mp">Mile Posts</label><br>
+    <input
+      class="layerSelect"
+      type="checkbox"
+      id="Planned"
+      value="Planned"
+      checked
+    />
+    <label for="Planned">Planned</label><br />
+    <input class="layerSelect" type="checkbox" id="Finished" value="Finished" />
+    <label for="Finished">Finished</label><br />
+    <input class="layerSelect" type="checkbox" id="InDesign" value="InDesign" />
+    <label for="InDesign">In Design</label><br />
+    <input class="layerSelect" type="checkbox" id="Studies" value="Studies" />
+    <label for="Studies">Studies</label><br />
+    <input
+      class="layerSelect"
+      type="checkbox"
+      id="Construction"
+      value="Construction"
+    />
+    <label for="Construction">Construction</label><br />
+    <input
+      class="layerSelect"
+      type="checkbox"
+      id="SubstantiallyComplete"
+      value="SubstantiallyComplete"
+    />
+    <label for="SubstantiallyComplete">Substantially Complete</label><br />
+    <input
+      class="layerSelect"
+      type="checkbox"
+      id="AllProjects"
+      value="AllProjects"
+    />
+    <label for="AllProjects">All Projects</label><br />
+    <input class="layerSelect" type="checkbox" id="mp" value="mp" />
+    <label for="mp">Mile Posts</label><br />
   </div>
 
   <script src="index.js"></script>
