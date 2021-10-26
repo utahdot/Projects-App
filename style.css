@@ -12,6 +12,8 @@ body {
     height: 100%;
     width: 100%;
   }
+
+  /* TabContainer widget */
   #tabs {
     height: 33%;
     width: 100%;
@@ -19,14 +21,16 @@ body {
     position: absolute;
     visibility: visible;
   }
+
   .zoomer-buttons{
     display: flex;
     flex-direction: row;
   }
 
+  /* */
   #layerQuery{
   width: max-content;
-  padding: auto;
+  padding: 10px;
   }
 
   label{

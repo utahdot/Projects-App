@@ -1,0 +1,38 @@
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#viewDiv {
+    padding: 0;
+    margin: 0;
+    height: 68%;
+    width: 100%;
+}
+
+#tabDiv {
+    padding: 0;
+    margin: 0;
+    bottom: 0;
+    height: 30%;
+    overflow-x: hidden;
+}
+
+calcite-tabs {
+    width: 100%;
+    height: 100%;
+}
+
+calcite-tab {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.tabContent {
+    width: 100%;
+    overflow-x: hidden;
+}

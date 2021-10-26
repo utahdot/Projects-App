@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+        <title>UDOT Projects App 2.0</title>
+
+        <link rel="stylesheet" href="style_nodojo.css">
+        <link rel="stylesheet" href="https://js.arcgis.com/4.21/esri/themes/light/main.css">
+        <link rel="stylesheet" href="https://js.arcgis.com/calcite-components/1.0.0-beta.67/calcite.css" />
+
+        <script src="https://js.arcgis.com/4.21/"></script>
+        <script type="module" src="https://js.arcgis.com/calcite-components/1.0.0-beta.67/calcite.esm.js"></script>
+        <script nomodule="" src="https://js.arcgis.com/calcite-components/1.0.0-beta.67/calcite.js"></script>
+
+        <script src="index_nodojo.js"></script>
+    </head>
+
+    <body>
+        <div id="viewDiv"></div>
+
+        <div id="tabDiv">
+            <calcite-tabs>
+                <calcite-tab-nav slot="tab-nav">
+                    <calcite-tab-title active>Planned</calcite-tab-title>
+                    <calcite-tab-title>Finished</calcite-tab-title>
+                    <calcite-tab-title>In Design</calcite-tab-title>
+                    <calcite-tab-title>Studies</calcite-tab-title>
+                    <calcite-tab-title>Construction</calcite-tab-title>
+                    <calcite-tab-title>Substantially Complete</calcite-tab-title>
+                    <calcite-tab-title>All Projects</calcite-tab-title>
+                </calcite-tab-nav>
+
+                <calcite-tab active><div id="tabPlanned" class="tabContent"></div></calcite-tab>
+                <calcite-tab><div id="tabFinished" class="tabContent"></div></calcite-tab>
+                <calcite-tab><div id="tabInDesign" class="tabContent"></div></calcite-tab>
+                <calcite-tab>Studies Table</calcite-tab>
+                <calcite-tab>Construction Table</calcite-tab>
+                <calcite-tab>Substantially Complete Table</calcite-tab>
+                <calcite-tab>All Projects Table</calcite-tab>
+
+            </calcite-tabs>
+        </div>
+    </body>
+
+</html>

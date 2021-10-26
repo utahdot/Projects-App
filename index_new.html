@@ -1,69 +1,111 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
+
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="https://js.arcgis.com/4.20/dijit/themes/claro/claro.css"/>
-    <link rel="stylesheet" href="https://js.arcgis.com/4.20/esri/themes/light/main.css"/>
+    <link rel="stylesheet" href="https://js.arcgis.com/4.21/dijit/themes/claro/claro.css"/>
+    <link rel="stylesheet" href="https://js.arcgis.com/4.21/esri/themes/light/main.css"/>
+
     <script>dojoConfig = {parseOnLoad: true}</script>
-    <script src="https://js.arcgis.com/4.20/"></script>
-    <title>UDOT Projects App 2 - Demo</title>
+    <script src="https://js.arcgis.com/4.21/"></script>
+
+    <title>UDOT Projects App - Justin</title>
   </head>
+
   <body class="claro esri-widget">
+
+    <!-- Map view div -->
     <div id="viewDiv"></div>
+
+    <!-- TabContainer widget for project layers -->
     <div id="tabs" class="table-tabs" dojoType="dijit/layout/TabContainer">
-      <div id="plannedTable"  class="table-tabs" dojoType="dijit/layout/ContentPane" title="Planned"></div>
+      <div id="plannedTable" class="table-tabs" dojoType="dijit/layout/ContentPane" title="Planned"></div>
       <div id="finishedTable" class="table-tabs" dojoType="dijit/layout/ContentPane" title="Finished"></div>
-      <div id="inDesignTable"  class="table-tabs" dojoType="dijit/layout/ContentPane" title="In Design"></div>
+      <div id="inDesignTable" class="table-tabs" dojoType="dijit/layout/ContentPane" title="In Design"></div>
       <div id="studiesTable" class="table-tabs" dojoType="dijit/layout/ContentPane" title="Studies"></div>
-      <div id="constructionTable"  class="table-tabs" dojoType="dijit/layout/ContentPane" title="Construction"></div>
-      <div id="substantiallyCompleteTable"  class="table-tabs" dojoType="dijit/layout/ContentPane" title="Substantially Complete"></div>
+      <div id="constructionTable" class="table-tabs" dojoType="dijit/layout/ContentPane" title="Construction"></div>
+      <div id="substantiallyCompleteTable" class="table-tabs" dojoType="dijit/layout/ContentPane" title="Substantially Complete"></div>
       <div id="allProjectsTable" class="table-tabs" dojoType="dijit/layout/ContentPane" title="All Projects"></div>
     </div>
+
+    <!-- toggle widget for opening/closing Checkbox container -->
     <div id="tableCheck" title="Toggle Table" class="esri-icon-table esri-widget--button esri-widget esri-interactive"></div>
-  
-  <div id="layerQuery" class="container esri-widget">
-    <h2>Layers</h2>
-    <input
-      class="layerSelect"
-      type="checkbox"
-      id="Planned"
-      value="Planned"
-      checked
-    />
-    <label for="Planned">Planned</label><br />
-    <input class="layerSelect" type="checkbox" id="Finished" value="Finished" />
-    <label for="Finished">Finished</label><br />
-    <input class="layerSelect" type="checkbox" id="InDesign" value="InDesign" />
-    <label for="InDesign">In Design</label><br />
-    <input class="layerSelect" type="checkbox" id="Studies" value="Studies" />
-    <label for="Studies">Studies</label><br />
-    <input
-      class="layerSelect"
-      type="checkbox"
-      id="Construction"
-      value="Construction"
-    />
-    <label for="Construction">Construction</label><br />
-    <input
-      class="layerSelect"
-      type="checkbox"
-      id="SubstantiallyComplete"
-      value="SubstantiallyComplete"
-    />
-    <label for="SubstantiallyComplete">Substantially Complete</label><br />
-    <input
-      class="layerSelect"
-      type="checkbox"
-      id="AllProjects"
-      value="AllProjects"
-    />
-    <label for="AllProjects">All Projects</label><br />
-    <input class="layerSelect" type="checkbox" id="mp" value="mp" />
-    <label for="mp">Mile Posts</label><br />
-  </div>
-</body>
-  <script src="index.js"></script>
+
+    <!-- start of container widget of checkbox inputs and labels -->
+    <div id="layerQuery" class="container esri-widget">
+      <h2>Layers</h2>
+
+      <input
+        class="layerSelect"
+        type="checkbox"
+        id="Planned"
+        value="Planned"
+        checked
+      />
+      <label for="Planned">Planned</label><br />
+
+      <input
+        class="layerSelect"
+        type="checkbox"
+        id="Finished"
+        value="Finished"
+      />
+      <label for="Finished">Finished</label><br />
+
+      <input
+        class="layerSelect"
+        type="checkbox"
+        id="InDesign"
+        value="InDesign"
+      />
+      <label for="InDesign">In Design</label><br />
+
+      <input
+        class="layerSelect"
+        type="checkbox"
+        id="Studies"
+        value="Studies"
+      />
+      <label for="Studies">Studies</label><br />
+
+      <input
+        class="layerSelect"
+        type="checkbox"
+        id="Construction"
+        value="Construction"
+      />
+      <label for="Construction">Construction</label><br />
+
+      <input
+        class="layerSelect"
+        type="checkbox"
+        id="SubstantiallyComplete"
+        value="SubstantiallyComplete"
+      />
+      <label for="SubstantiallyComplete">Substantially Complete</label><br />
+
+      <input
+        class="layerSelect"
+        type="checkbox"
+        id="AllProjects"
+        value="AllProjects"
+      />
+      <label for="AllProjects">All Projects</label><br />
+
+      <input
+        class="layerSelect"
+        type="checkbox"
+        id="mp"
+        value="mp"
+      />
+      <label for="mp">Mile Posts</label><br />
+
+    </div>
+  </body>
+
+  <!-- import the ArcGIS Javascript API script-->
+  <script src="index_new.js"></script>
+
 </html>
