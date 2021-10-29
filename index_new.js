@@ -54,8 +54,10 @@ require([
     AllProjects: { point: null, line: null },
   };
 
-  // layer definition queries
-  // ??? which feature service are these using?
+  // Object storing layer definitions as objects
+  // SQL definition queries for use with points and lines layers
+  // symbology color
+
   const layerQueries = {
     Finished: {
       definitionExpression:
