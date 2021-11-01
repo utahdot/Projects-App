@@ -22,10 +22,17 @@ body {
     padding-left: 5px;
     padding-right: 5px;
     margin-left: 2%;
-    height: 35%;
+    height: 30%;
     overflow-x: hidden;
 }
 
+calcite-tab-nav {
+    padding-top: 5px;
+}
+
+calcite-tab-title {
+    color: blue;
+}
 
 calcite-tabs {
     width: 100%;
@@ -35,9 +42,27 @@ calcite-tabs {
 calcite-tab {
     width: 100%;
     overflow-x: hidden;
+    font-size: large;
 }
 
 .tabContent {
     width: 100%;
     overflow-x: hidden;
 }
+
+.esri-feature-table__header {
+    height: 30px;
+    line-height: 30px;
+}
+
+
+#footer {
+    position: relative;
+    bottom: 40px;
+    width: 95%;
+    height: 18px;
+    background-color: red;
+    color: white;
+    text-align: center;
+    margin: auto;
+  }

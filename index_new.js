@@ -456,6 +456,7 @@ require([
     }
   }
 
+
   // call toggleLayers() to toggle map layers
   // each "Layer" in the widget is two separate feature classes (line and point)
 

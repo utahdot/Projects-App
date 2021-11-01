@@ -8,7 +8,7 @@
 
         <link rel="stylesheet" href="style_nodojo.css">
         <link rel="stylesheet" href="https://js.arcgis.com/4.21/esri/themes/light/main.css">
-        <link rel="stylesheet" href="https://js.arcgis.com/calcite-components/1.0.0-beta.67/calcite.css" />
+        <link rel="stylesheet" href="https://js.arcgis.com/calcite-components/1.0.0-beta.67/calcite.css">
 
         <script src="https://js.arcgis.com/4.21/"></script>
         <script type="module" src="https://js.arcgis.com/calcite-components/1.0.0-beta.67/calcite.esm.js"></script>
@@ -18,10 +18,11 @@
     </head>
 
     <body>
+
         <div id="viewDiv"></div>
 
         <div id="tabDiv">
-            <calcite-tabs>
+            <calcite-tabs bordered layout="center" scale="s">
                 <calcite-tab-nav slot="tab-nav">
                     <calcite-tab-title active>Planned</calcite-tab-title>
                     <calcite-tab-title>Finished</calcite-tab-title>
@@ -35,13 +36,13 @@
                 <calcite-tab active><div id="tabPlanned" class="tabContent"></div></calcite-tab>
                 <calcite-tab><div id="tabFinished" class="tabContent"></div></calcite-tab>
                 <calcite-tab><div id="tabInDesign" class="tabContent"></div></calcite-tab>
-                <calcite-tab>Studies Table</calcite-tab>
-                <calcite-tab>Construction Table</calcite-tab>
-                <calcite-tab>Substantially Complete Table</calcite-tab>
-                <calcite-tab>All Projects Table</calcite-tab>
-
+                <calcite-tab><div id="tabStudies" class="tabContent"></div></calcite-tab>
+                <calcite-tab><div id="tabConstruction" class="tabContent"></div></calcite-tab>
+                <calcite-tab><div id="tabSubstantiallyComplete" class="tabContent"></div></calcite-tab>
+                <calcite-tab><div id="tabAllProjects" class="tabContent"></div></calcite-tab>
             </calcite-tabs>
         </div>
-    </body>
 
+        <!-- <div id="footer">Table Tab Expander</div> -->
+    </body>
 </html>
