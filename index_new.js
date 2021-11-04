@@ -30,91 +30,196 @@ require([
   domClass
 ) {
 
-  const epmPopUpText =
-    '<b><p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:10pt;font-family:Verdana;color:#ffffff;background-color:#0b5588;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">PROJECT INFORMATION </span></p><p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">PIN:</span><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"> {PIN}</span><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br /></span><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Project Name:</span><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"> {PIN_DESC}</span></p><p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Region:</span><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"> {REGION_CD}</span></p><p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Status:</span><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"> {PIN_STAT_NM}</span><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br /></span><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Program:</span><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"> {PROGRAM}</span></p><p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Description:</span><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"> {PUBLIC_DESC}</span></p><br /><p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:10pt;font-family:Verdana;color:#ffffff;background-color:#0b5588;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">PROJECT CONTACTS </span></p><p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Public Contact:</span><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"> {PUB_CTC_NM}</span></p><p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Phone: </span><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">{PUB_CTC_PH}</span><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br /></span><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Email:  </span><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">{PUB_CTC_EMAIL}</span><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br /></span><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">*If the contact information is blank please contact your </span><a href="https://www.udot.utah.gov/main/f?p=100:pg:0:::1:T,V:38" rel="nofollow ugc" style="text-decoration:none;"><span style="font-size:10pt;font-family:Verdana;color:#1155cc;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:underline;-webkit-text-decoration-skip:none;text-decoration-skip-ink:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Region office</span></a><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"> for more information.   </span></p><br /><p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:10pt;font-family:Verdana;color:#ffffff;background-color:#0b5588;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">DATES </span></p><p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Start Year: </span><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">{FORECAST_ST_YR}</span><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br /></span><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Start Date:</span><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"> {START_DAT}</span></p><p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">End Date:</span><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"> {EPM_PLAN_END_DATE}</span><span style="font-size:10pt;font-family:Verdana;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br /></span><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">*If the schedule information is blank please contact your </span><a href="https://www.udot.utah.gov/main/f?p=100:pg:0:::1:T,V:38" rel="nofollow ugc" style="text-decoration:none;"><span style="font-size:10pt;font-family:Verdana;color:#1155cc;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:underline;-webkit-text-decoration-skip:none;text-decoration-skip-ink:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Region office</span></a><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"> for more information. </span><span style="font-size:10pt;font-family:Verdana;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">  </span><span style="font-size:10pt;font-family:Verdana;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br /></span><span style="font-size:10pt;font-family:Verdana;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br /></span><span style="font-size:10pt;font-family:Verdana;color:#ffffff;background-color:#0b5588;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">PROJECT FUNDING </span></p><p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Project Value: </span><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">${PROJECT_VALUE}</span></p><p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Federal Dollars:</span><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"> ${FED_DOLLARS}</span></p><p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">State Dollars:</span><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"> ${STATE_DOLLARS}</span></p><p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Total Expenditures:</span><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"> ${TOTAL_EXPENDITURES}</span></p><br /><p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:10pt;font-family:Verdana;color:#ffffff;background-color:#0b5588;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">ADDITIONAL INFORMATION </span></p><p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Information Page:</span></p><p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;"><a href="https://www.udot.utah.gov/projectpages/f?p=250:2007:0::NO:2007:P2007_EPM_PROJ_XREF_NO,P2007_PROJECT_TYPE_IND_FLAG:{PROJ_XREF_NO}" rel="nofollow ugc" target="_blank">Click for more information</a><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br /><br />Traffic Impacts:</span><span style="font-size:10pt;font-family:Verdana;color:#000000;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br /></span><a href="https://udottraffic.utah.gov/construction.aspx?tab=0" rel="nofollow ugc" target="_blank">Click to launch UDOT Traffic</a><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br /></span></p><p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br /></span></p><p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Roadway Imagery:</span><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"> </span><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br /></span><a href="https://168.178.125.102/roadview.asp?Route={ROUTE_NAME}&amp;Mile={START_ACCUM}" rel="nofollow ugc" target="_blank">Click to launch Roadview Explorer</a></p><p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br /></span><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Data Download Link:</span><span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"> </span></p><p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;"><a href="https://data-uplan.opendata.arcgis.com/datasets/epm-all-projects-as-lines" rel="nofollow ugc" target="_blank">Click to launch Open Data</a></p></b>';
+    const epmPopUpText =
+      '<b>'
+      +'<p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;">'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#ffffff;background-color:#0b5588;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">PROJECT INFORMATION</span></p>'
+      +'<p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;">'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">PIN:</span>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"> {PIN}</span>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br /></span>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Project Name:</span>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"> {PIN_DESC}</span></p>'
+      +'<p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;">'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Region:</span>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"> {REGION_CD}</span></p>'
+      +'<p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;">'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Status:</span>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"> {PIN_STAT_NM}</span>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br /></span>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Program:</span>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"> {PROGRAM}</span></p>'
+      +'<p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;">'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Description:</span>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"> {PUBLIC_DESC}</span></p>'
+      +'<br />'
+      +'<p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;">'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#ffffff;background-color:#0b5588;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">PROJECT CONTACTS </span></p>'
+      +'<p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;">'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Public Contact:</span>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"> {PUB_CTC_NM}</span></p>'
+      +'<p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;">'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Phone: </span>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">{PUB_CTC_PH}</span>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br /></span>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Email:  </span>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">{PUB_CTC_EMAIL}</span>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br /></span>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">*If the contact information is blank please contact your </span>'
+      +'<a href="https://www.udot.utah.gov/main/f?p=100:pg:0:::1:T,V:38" rel="nofollow ugc" style="text-decoration:none;">'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#1155cc;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:underline;-webkit-text-decoration-skip:none;text-decoration-skip-ink:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Region office</span>'
+      +'</a>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"> for more information.</span></p>'
+      +'<br />'
+      +'<p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;">'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#ffffff;background-color:#0b5588;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">DATES </span></p>'
+      +'<p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;">'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Start Year: </span>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">{FORECAST_ST_YR}</span>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br /></span>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Start Date:</span>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"> {START_DAT}</span></p>'
+      +'<p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;">'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">End Date:</span>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"> {EPM_PLAN_END_DATE}</span>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br /></span>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">*If the schedule information is blank please contact your </span>'
+      +'<a href="https://www.udot.utah.gov/main/f?p=100:pg:0:::1:T,V:38" rel="nofollow ugc" style="text-decoration:none;">'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#1155cc;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:underline;-webkit-text-decoration-skip:none;text-decoration-skip-ink:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Region office</span>'
+      +'</a>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"> for more information. </span>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">  </span>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br /></span>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br /></span>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#ffffff;background-color:#0b5588;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">PROJECT FUNDING </span></p>'
+      +'<p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;">'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Project Value: </span>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">${PROJECT_VALUE}</span></p>'
+      +'<p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;">'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Federal Dollars:</span>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"> ${FED_DOLLARS}</span></p>'
+      +'<p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;">'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">State Dollars:</span>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"> ${STATE_DOLLARS}</span></p>'
+      +'<p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;">'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Total Expenditures:</span>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"> ${TOTAL_EXPENDITURES}</span></p>'
+      +'<br />'
+      +'<p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;">'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#ffffff;background-color:#0b5588;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">ADDITIONAL INFORMATION </span></p>'
+      +'<p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;">'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Information Page:</span></p>'
+      +'<p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;">'
+      +'<a href="https://www.udot.utah.gov/projectpages/f?p=250:2007:0::NO:2007:P2007_EPM_PROJ_XREF_NO,P2007_PROJECT_TYPE_IND_FLAG:{PROJ_XREF_NO}" rel="nofollow ugc" target="_blank">Click for more information'
+      +'</a>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br /><br />Traffic Impacts:</span>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#000000;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br /></span>'
+      +'<a href="https://udottraffic.utah.gov/construction.aspx?tab=0" rel="nofollow ugc" target="_blank">Click to launch UDOT Traffic'
+      +'</a>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br /></span></p>'
+      +'<p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;">'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br /></span></p>'
+      +'<p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;">'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Roadway Imagery:</span>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"> </span>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br /></span>'
+      +'<a href="https://168.178.125.102/roadview.asp?Route={ROUTE_NAME}&amp;Mile={START_ACCUM}" rel="nofollow ugc" target="_blank">Click to launch Roadview Explorer'
+      +'</a></p>'
+      +'<p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;">'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br /></span>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:700;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Data Download Link:</span>'
+      +'<span style="font-size:10pt;font-family:Verdana;color:#696969;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"> </span></p>'
+      +'<p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;"><a href="https://data-uplan.opendata.arcgis.com/datasets/epm-all-projects-as-lines" rel="nofollow ugc" target="_blank">Click to launch Open Data</a></p>'
+      +'</b>';
 
+    const epmPopup = {
+      content: epmPopUpText,
+      title: "{PIN_DESC}",
+    };
+
+
+    // get all of the checkboxes
     let selectorClass = document.querySelectorAll(".layerSelect");
 
+    // checkbox for the milepost layer
+    let mpCheck = document.querySelector("#mpCheck");
+
+    // add event listeners to the checkboxes, and a callback to toggle visibility of the layer groups
     selectorClass.forEach((e) => {
-    e.addEventListener("click", toggleLayers);
-  });
+      e.addEventListener("click", toggleLayers);
+    });
 
-  let mpCheck = document.querySelector("#mpCheck");
+    // let tableCheck = document.querySelector("#tableCheck");
 
-  // let tableCheck = document.querySelector("#tableCheck");
+    // mapLayers object
+    // stores info about the layer group objects, which consist of a point and line Feature Class
+    const mapLayers = {
+      Planned: { point: null, line: null },
+      Finished: { point: null, line: null },
+      InDesign: { point: null, line: null },
+      Studies: { point: null, line: null },
+      Construction: { point: null, line: null },
+      SubstantiallyComplete: { point: null, line: null },
+      AllProjects: { point: null, line: null },
+    };
 
-  // mapLayers object
-  const mapLayers = {
-    Planned: { point: null, line: null },
-    Finished: { point: null, line: null },
-    InDesign: { point: null, line: null },
-    Studies: { point: null, line: null },
-    Construction: { point: null, line: null },
-    SubstantiallyComplete: { point: null, line: null },
-    AllProjects: { point: null, line: null },
-  };
+    // Object storing layer attributes and definitions as objects
+    // SQL definition queries for use with points and lines layers
+    // symbology color
 
-  // Object storing layer definitions as objects
-  // SQL definition queries for use with points and lines layers
-  // symbology color
-
-  const layerQueries = {
-    Finished: {
-      definitionExpression:
-        "PIN_STAT_NM = 'Physically Complete' OR PIN_STAT_NM = 'Contract Complete' OR PIN_STAT_NM = 'Region Review' OR PIN_STAT_NM = 'Central Review' OR PIN_STAT_NM = 'Contract Closed Out' OR PIN_STAT_NM = 'Close Out' OR PIN_STAT_NM = 'Closed'",
-      color: "red",
-    },
-    InDesign: {
-      definitionExpression:
-        "PROJ_TYP_NM <> 'Studies' AND ( PIN_STAT_NM = 'Active' OR PIN_STAT_NM = 'Concept Scoping' OR PIN_STAT_NM = 'Advertised' OR PIN_STAT_NM = 'Awarded' OR PIN_STAT_NM = 'Concept Active' OR PIN_STAT_NM = 'Concept Cmplt' OR PIN_STAT_NM = 'Scoping')",
-      color: "yellow",
-    },
-    Planned: {
-      definitionExpression:
-        "PROJ_TYP_NM <> 'Studies' AND ( PIN_STAT_NM = 'STIP' OR PIN_STAT_NM = 'Funding' OR (PIN_STAT_NM = 'Proposed' AND REGION_PRTY <999))",
-      color: "black",
-    },
-    Studies: {
-      definitionExpression:
-        "(PUBLIC_DESC LIKE '%stud%' OR PUBLIC_DESC LIKE '%STUD%' OR PUBLIC_DESC LIKE '%Stud%' OR PIN_DESC LIKE '%stud%' OR PIN_DESC LIKE '%STUD%' OR PIN_DESC LIKE '%Stud%' OR PROJ_TYP_NM = 'Studies') AND (PIN_STAT_NM <> 'Physically Complete' AND PIN_STAT_NM <> 'Contract Complete' AND PIN_STAT_NM <> 'Region Review' AND PIN_STAT_NM <> 'Central Review' AND PIN_STAT_NM <> 'Contract Closed Out' AND PIN_STAT_NM <> 'Close Out' AND PIN_STAT_NM <> 'Closed')",
-      color: "blue",
-    },
-    Construction: {
-      definitionExpression:
-        "PROJ_TYP_NM <> 'Studies' AND (PIN_STAT_NM = 'Under Construction')",
-      color: "green",
-    },
-    SubstantiallyComplete: {
-      definitionExpression:
-        "PROJ_TYP_NM <> 'Studies' AND (PIN_STAT_NM = 'Substantially Compl')",
-      color: "orange",
-    },
-    AllProjects: {
-      definitionExpression: "1=1",
-      color: "purple",
-    },
-  };
-
-  const epmPopup = {
-    content: epmPopUpText,
-    title: "{PIN_DESC}",
-  };
-
-  let plannedLinesView;
-  const plannedLines = new FeatureLayer({
-    url: "https://maps.udot.utah.gov/central/rest/services/EPM/EPM_All_Projects_as_Lines/MapServer/0",
-    definitionExpression: layerQueries.Planned.definitionExpression,
-    title: "Planned Projects",
-    renderer: {
-      type: "simple",
-      symbol: {
-        type: "simple-line",
-        width: 2,
-        color: layerQueries.Planned.color,
+    const layerQueries = {
+      Finished: {
+        definitionExpression:
+          "PIN_STAT_NM = 'Physically Complete' OR PIN_STAT_NM = 'Contract Complete' OR PIN_STAT_NM = 'Region Review' OR PIN_STAT_NM = 'Central Review' OR PIN_STAT_NM = 'Contract Closed Out' OR PIN_STAT_NM = 'Close Out' OR PIN_STAT_NM = 'Closed'",
+        color: "red",
       },
-    },
-    popupTemplate: epmPopup,
-  });
+      InDesign: {
+        definitionExpression:
+          "PROJ_TYP_NM <> 'Studies' AND ( PIN_STAT_NM = 'Active' OR PIN_STAT_NM = 'Concept Scoping' OR PIN_STAT_NM = 'Advertised' OR PIN_STAT_NM = 'Awarded' OR PIN_STAT_NM = 'Concept Active' OR PIN_STAT_NM = 'Concept Cmplt' OR PIN_STAT_NM = 'Scoping')",
+        color: "yellow",
+      },
+      Planned: {
+        definitionExpression:
+          "PROJ_TYP_NM <> 'Studies' AND ( PIN_STAT_NM = 'STIP' OR PIN_STAT_NM = 'Funding' OR (PIN_STAT_NM = 'Proposed' AND REGION_PRTY <999))",
+        color: "black",
+      },
+      Studies: {
+        definitionExpression:
+          "(PUBLIC_DESC LIKE '%stud%' OR PUBLIC_DESC LIKE '%STUD%' OR PUBLIC_DESC LIKE '%Stud%' OR PIN_DESC LIKE '%stud%' OR PIN_DESC LIKE '%STUD%' OR PIN_DESC LIKE '%Stud%' OR PROJ_TYP_NM = 'Studies') AND (PIN_STAT_NM <> 'Physically Complete' AND PIN_STAT_NM <> 'Contract Complete' AND PIN_STAT_NM <> 'Region Review' AND PIN_STAT_NM <> 'Central Review' AND PIN_STAT_NM <> 'Contract Closed Out' AND PIN_STAT_NM <> 'Close Out' AND PIN_STAT_NM <> 'Closed')",
+        color: "blue",
+      },
+      Construction: {
+        definitionExpression:
+          "PROJ_TYP_NM <> 'Studies' AND (PIN_STAT_NM = 'Under Construction')",
+        color: "green",
+      },
+      SubstantiallyComplete: {
+        definitionExpression:
+          "PROJ_TYP_NM <> 'Studies' AND (PIN_STAT_NM = 'Substantially Compl')",
+        color: "orange",
+      },
+      AllProjects: {
+        definitionExpression: "1=1",
+        color: "purple",
+      },
+    };
+
+
+    let plannedLinesView;
+    const plannedLines = new FeatureLayer({
+      url: "https://maps.udot.utah.gov/central/rest/services/EPM/EPM_All_Projects_as_Lines/MapServer/0",
+      definitionExpression: layerQueries.Planned.definitionExpression,
+      title: "Planned Projects",
+      renderer: {
+        type: "simple",
+        symbol: {
+          type: "simple-line",
+          width: 2,
+          color: layerQueries.Planned.color,
+        },
+      },
+      popupTemplate: epmPopup,
+    });
 
   let plannedPointsView;
   const plannedPoints = new FeatureLayer({
@@ -458,7 +563,7 @@ require([
 
 
   // call toggleLayers() to toggle map layers
-  // each "Layer" in the widget is two separate feature classes (line and point)
+  // each Layer in the widget is two separate feature classes (line and point)
 
   // "Planned" layer
   view.whenLayerView(plannedLines).then(function (layer) {

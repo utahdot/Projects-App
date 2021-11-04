@@ -2,36 +2,42 @@
 require([
     "esri/config",
     "esri/Map",
+    "esri/Graphic",
     "esri/views/MapView",
     "esri/core/watchUtils",
     "esri/layers/FeatureLayer",
     "esri/layers/GroupLayer",
+    "esri/layers/support/LabelClass",
+    "esri/symbols/SimpleMarkerSymbol",
     "esri/widgets/FeatureTable",
     "esri/widgets/LayerList",
     "esri/widgets/BasemapGallery",
     "esri/widgets/Search",
     "esri/widgets/Expand",
-
+    "esri/widgets/Locate",
 ], (
     esriConfig,
     Map,
+    Graphic,
     MapView,
     watchUtils,
     FeatureLayer,
     GroupLayer,
+    LabelClass,
+    SimpleMarkerSymbol,
     FeatureTable,
     LayerList,
     BasemapGallery,
     Search,
     Expand,
+    Locate,
     ) => {
 
         // API key for accessing newer Esri basemaps
         esriConfig.apiKey = "AAPKc422669b0fbe46a2b56d697c4dd3384cYslFfknNEQtB3WgUxoiEsPrfUr2viZq0XYQqCSdSjTKTldmVSiccSYqaz_2hLWPa"
 
-        // Object storing layer definitions as objects
-        // SQL definition queries for use with points and lines layers
-        // symbology color
+        // ** FeatureLayer definitions
+        // Stored as objects for use with points and lines layers
         const layerQueries = {
             Finished: {
                 definitionExpression:
@@ -71,7 +77,65 @@ require([
         };
 
 
-        // FeatureLayers and their GroupLayers
+        // ** Popup template
+        // const epmPopup = {
+        //     title: '{PIN_DESC}',
+        //     content:
+        //          '{PIN}<br />'
+        //         +'{PIN_DESC}<br />'
+        //         +'{REGION_CD}<br />'
+        //         +'{PIN_STAT_NM}<br />'
+        //         +'{PROGRAM}<br />'
+        //         +'{PUBLIC_DESC}<br />'
+        //         +'{PUB_CTC_NM}<br />'
+        //         +'{PUB_CTC_PH}<br />'
+        //         +'{PUB_CTC_EMAIL}<br />'
+        //         +'{FORECAST_ST_YR}<br />'
+        //         +'{START_DAT}<br />'
+        //         +'{EPM_PLAN_END_DATE}<br />'
+        //         +'{PROJECT_VALUE}<br />'
+        //         +'{FED_DOLLARS}<br />'
+        //         +'{STATE_DOLLARS}<br />'
+        //         +'{TOTAL_EXPENDITURES}<br />'
+        // };
+
+        const epmPopup = {
+            title: '{PIN_DESC}',
+            content: [
+                {
+                    type: "text",
+                    text: "<b>PROJECT INFORMATION</b>"
+                },
+                {
+                    type: "fields",
+                    fieldInfos: [
+                        {
+                            label: "PIN",
+                            fieldName: "PIN",
+                        },
+                        {
+                            label: "Region",
+                            fieldName: "REGION_CD",
+                        },
+                        {
+                            label: "Status",
+                            fieldName: "PIN_STAT_NM",
+                        },
+                        {
+                            label: "Program",
+                            fieldName: "PROGRAM",
+                        },
+                    ]
+                },
+                {
+                    type: "text",
+                    text: "<b>DESCRIPTION:</b><p>{PUBLIC_DESC}</p>"
+                },
+            ]
+        };
+
+
+        // ** FeatureLayers and their GroupLayers
 
         // Planned
         const plannedLines = new FeatureLayer({
@@ -86,6 +150,7 @@ require([
                     color: layerQueries.Planned.color,
                 },
             },
+            popupTemplate: epmPopup,
         });
 
         const plannedPoints = new FeatureLayer({
@@ -100,6 +165,7 @@ require([
                     color: layerQueries.Planned.color,
                 },
             },
+            popupTemplate: epmPopup,
         });
 
         const groupPlanned = new GroupLayer({
@@ -123,6 +189,7 @@ require([
                     color: layerQueries.Finished.color,
                 },
             },
+            popupTemplate: epmPopup,
         });
 
         const finishedPoints = new FeatureLayer({
@@ -137,6 +204,7 @@ require([
                     color: layerQueries.Finished.color,
                 },
             },
+            popupTemplate: epmPopup,
         });
 
         const groupFinished = new GroupLayer({
@@ -160,6 +228,7 @@ require([
                     color: layerQueries.InDesign.color,
                 },
             },
+            popupTemplate: epmPopup,
         });
 
         const inDesignPoints = new FeatureLayer({
@@ -174,6 +243,7 @@ require([
                     color: layerQueries.InDesign.color,
                 },
             },
+            popupTemplate: epmPopup,
         });
 
         const groupInDesign = new GroupLayer({
@@ -197,6 +267,7 @@ require([
                     color: layerQueries.Studies.color,
                 },
             },
+            popupTemplate: epmPopup,
         });
 
         const studiesPoints = new FeatureLayer({
@@ -211,6 +282,7 @@ require([
                     color: layerQueries.Studies.color,
                 },
             },
+            popupTemplate: epmPopup,
         });
 
         const groupStudies = new GroupLayer({
@@ -234,6 +306,7 @@ require([
                     color: layerQueries.Construction.color,
                 },
             },
+            popupTemplate: epmPopup,
         });
 
         const constructionPoints = new FeatureLayer({
@@ -248,6 +321,7 @@ require([
                     color: layerQueries.Construction.color,
                 },
             },
+            popupTemplate: epmPopup,
         });
 
         const groupConstruction = new GroupLayer({
@@ -271,6 +345,7 @@ require([
                     color: layerQueries.SubstantiallyComplete.color,
                 },
             },
+            popupTemplate: epmPopup,
         });
 
         const SubstantiallyCompletePoints = new FeatureLayer({
@@ -285,6 +360,7 @@ require([
                     color: layerQueries.SubstantiallyComplete.color,
                 },
             },
+            popupTemplate: epmPopup,
         });
 
         const groupSubstantiallyComplete = new GroupLayer({
@@ -308,6 +384,7 @@ require([
                     color: layerQueries.AllProjects.color,
                 },
             },
+            popupTemplate: epmPopup,
         });
 
         const allProjectsPoints = new FeatureLayer({
@@ -322,24 +399,78 @@ require([
                     color: layerQueries.AllProjects.color,
                 },
             },
+            popupTemplate: epmPopup,
         });
 
         const groupAllProjects = new GroupLayer({
             title: "All Projects",
             layers: [allProjectsLines, allProjectsPoints],
             visibilityMode: "independent",
-            visible: false
+            visible: false,
         });
 
 
-        // ADD: mileposts layer here
+        // UDOT Milepost layers
+
+        // labels for the mpLayer (mile posts)
+        const mpLabel = new LabelClass({
+            labelExpressionInfo: { expression: "$feature.Measure" },
+                symbol: {
+                    type: "text",
+                    color: "black",
+                    haloSize: 1,
+                    haloColor: "white",
+                font: {
+                    family: "Ubuntu Mono",
+                    size: 9,
+                    weight: "bold",
+                },
+            },
+            labelPlacement: "center-center",
+        });
+
+        // *** ToDo: create labels for the 10th mile points
+
+        const selectSymbol = new SimpleMarkerSymbol({
+            color: "lime",
+            outline: {
+                color: [128, 128, 128, 0.5],
+                width: "0.6px",
+            },
+        });
+
+        const mpLayer = new FeatureLayer({
+            url: "https://services1.arcgis.com/99lidPhWCzftIe9K/ArcGIS/rest/services/UDOTMileposts/FeatureServer/0",
+            title: "UDOT Mileposts",
+            labelingInfo: mpLabel,
+            renderer: {
+                type: "simple",
+                symbol: selectSymbol,
+            },
+            visible: true,
+        });
+
+        // *** ToDo: create scale-dependent renderer for the 10th mile points
+
+        const mpLayer10th = new FeatureLayer({
+            url: "https://services1.arcgis.com/99lidPhWCzftIe9K/ArcGIS/rest/services/UDOTTenthMileRefPoints/FeatureServer/0",
+            title: "UDOT Tenth Mile Reference Points",
+            visible: true,
+        });
+
+        const groupMileposts = new GroupLayer({
+            title: "UDOT Mileposts",
+            layers: [mpLayer10th, mpLayer],
+            visibilityMode: "independent",
+            visible: false,
+        })
 
 
-        // new Map object
+        // ** Map and MapView
         const map = new Map({
             basemap: "arcgis-navigation",
             layers: [
-                //mile posts
+                groupMileposts,
                 groupAllProjects,
                 groupSubstantiallyComplete,
                 groupConstruction,
@@ -360,14 +491,17 @@ require([
                 dockOptions: {
                     buttonEnabled: false,
                     breakpoint: false,
+                    position: "top-right",
                 }
             }
         });
 
 
+        // ** WIDGETS
+
         // LayerList widget
         let layerList = new LayerList({
-            view: view
+            view: view,
         });
 
         // LayerList Expand widget
@@ -381,26 +515,9 @@ require([
             position: "top-left"
         });
 
-        // BasemapGallery widget
-        let basemapGallery = new BasemapGallery({
-            view: view
-        });
 
-        // BasemapGallery Expand widget
-        let basemapGalleryExpand = new Expand({
-            expandIconClass: "esri-icon-basemap",
-            view: view,
-            expandTooltip: "Basemap Gallery",
-            content: basemapGallery
-        });
-        view.ui.add(basemapGalleryExpand, {
-            position: "top-right"
-        });
-
-
-
-        // Search widget FeatureLayers
-
+        // Search widget
+        // Additional FeatureLayers
         const municipalBoundaries = new FeatureLayer({
             url: "https://services1.arcgis.com/99lidPhWCzftIe9K/ArcGIS/rest/services/UtahMunicipalBoundaries/FeatureServer/0",
             title: "Municipalities"
@@ -425,8 +542,6 @@ require([
             url: "https://maps.udot.utah.gov/arcgis/rest/services/UDOT_Regions/MapServer/1",
             title: "UDOT Region Boundaries"
         });
-
-
 
         // Search widget
         let searchWidget = new Search({
@@ -509,9 +624,37 @@ require([
         });
 
 
-        // FeatureTables
+        // BasemapGallery widget
+        let basemapGallery = new BasemapGallery({
+            view: view
+        });
+
+        // BasemapGallery Expand widget
+        let basemapGalleryExpand = new Expand({
+            expandIconClass: "esri-icon-basemap",
+            view: view,
+            expandTooltip: "Basemap Gallery",
+            content: basemapGallery
+        });
+        view.ui.add(basemapGalleryExpand, {
+            position: "top-right"
+        });
+
+
+        // Locate widget
+        let locateWidget = new Locate({
+            view: view,
+            graphic: new Graphic({
+                symbol: { type: "simple-marker" }
+            })
+        });
+        view.ui.add(locateWidget, "top-left");
+
+
+        // ** FeatureTables
         // These go in the tabbed Calcite component widget at the bottom of the map
-        // ToDo: Find a way to expand/collapse this widget
+
+        // ToDo: Find a way to expand/collapse or show/hide this widget
 
         const plannedTable = new FeatureTable({
             layer: plannedLines,
@@ -553,5 +696,19 @@ require([
             layer: allProjectsLines,
             view: view,
             container: document.getElementById("tabAllProjects"),
+        });
+
+
+        // ** Asynchronous stuff
+        // When first loading the map, watch for the view to finish updating
+        // make any changes to the UI here:
+
+        // there is probably an event that fires when this happens. Cant' find it yet.
+        watchUtils.whenFalseOnce(view, "updating", () => {
+            // wait for the View to finish updating
+
+            // expand the LayerList widget
+            console.log("View finished updating");
+            layerListExpand.expand();
         });
 });
