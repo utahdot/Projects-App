@@ -76,6 +76,13 @@ require([
             },
         };
 
+        // set default symbology attributes
+        const layerSymbols = {
+            lineWidth: 2,
+            pointSize: 6
+        };
+
+
 
         // ** Popup template
         // const epmPopup = {
@@ -104,7 +111,7 @@ require([
             content: [
                 {
                     type: "text",
-                    text: "<b>PROJECT INFORMATION</b>"
+                    text: "<b>PROJECT INFORMATION</b>" // see if you can style this using a <span>
                 },
                 {
                     type: "fields",
@@ -131,6 +138,85 @@ require([
                     type: "text",
                     text: "<b>DESCRIPTION:</b><p>{PUBLIC_DESC}</p>"
                 },
+                {
+                    type: "text",
+                    text: "<b>PROJECT CONTACTS</b>"
+                },
+                {
+                    type: "fields",
+                    fieldInfos: [
+                        {
+                            label: "Public Contact",
+                            fieldName: "PUB_CTC_NM",
+                        },
+                        {
+                            label: "Phone",
+                            fieldName: "PUB_CTC_PH",
+                        },
+                        {
+                            label: "Email",
+                            fieldName: "PUB_CTC_EMAIL",
+                        },
+                    ]
+                },
+                {
+                    type: "text",
+                    text: "*If the contact information is blank, please contact your <a href='https://www.udot.utah.gov/connect/about-us/regional-offices/'>Region office</a>"
+                },
+                {
+                    type: "text",
+                    text: "<b>DATES</b>"
+                },
+                {
+                    type: "fields",
+                    fieldInfos: [
+                        {
+                            label: "Start Year",
+                            fieldName: "FORECAST_ST_YR",
+                        },
+                        {
+                            label: "Start Date",
+                            fieldName: "START_DAT",
+                        },
+                        {
+                            label: "End Date",
+                            fieldName: "EPM_PLAN_END_DATE",
+                        },
+                    ]
+                },
+                {
+                    type: "text",
+                    text: "*If the schedule information is blank, please contact your <a href='https://www.udot.utah.gov/connect/about-us/regional-offices/'>Region office</a>"
+                },
+                {
+                    type: "text",
+                    text: "<b>PROJECT FUNDING</b>"
+                },
+                {
+                    type: "fields",
+                    fieldInfos: [
+                        {
+                            label: "Project Value",
+                            fieldName: "",
+                        },
+                        {
+                            label: "Federal Dollars",
+                            fieldName: "",
+                        },
+                        {
+                            label: "State Dollars",
+                            fieldName: "",
+                        },
+                        {
+                            label: "Total Expenditures",
+                            fieldName: "",
+                        },
+                    ]
+                },
+                {
+                    type: "text",
+                    text: "<b>ADDITIONAL INFORMATION</b>"
+                },
             ]
         };
 
@@ -146,7 +232,7 @@ require([
                 type: "simple",
                 symbol: {
                     type: "simple-line",
-                    width: 2,
+                    width: layerSymbols.lineWidth,
                     color: layerQueries.Planned.color,
                 },
             },
@@ -161,7 +247,7 @@ require([
                 type: "simple",
                 symbol: {
                     type: "simple-marker",
-                    size: 6,
+                    size: layerSymbols.pointSize,
                     color: layerQueries.Planned.color,
                 },
             },
@@ -185,7 +271,7 @@ require([
                 type: "simple",
                 symbol: {
                     type: "simple-line",
-                    width: 2,
+                    width: layerSymbols.lineWidth,
                     color: layerQueries.Finished.color,
                 },
             },
@@ -200,7 +286,7 @@ require([
                 type: "simple",
                 symbol: {
                     type: "simple-marker",
-                    size: 6,
+                    size: layerSymbols.pointSize,
                     color: layerQueries.Finished.color,
                 },
             },
@@ -224,7 +310,7 @@ require([
                 type: "simple",
                 symbol: {
                     type: "simple-line",
-                    width: 2,
+                    width: layerSymbols.lineWidth,
                     color: layerQueries.InDesign.color,
                 },
             },
@@ -239,7 +325,7 @@ require([
                 type: "simple",
                 symbol: {
                     type: "simple-marker",
-                    size: 6,
+                    size: layerSymbols.pointSize,
                     color: layerQueries.InDesign.color,
                 },
             },
@@ -263,7 +349,7 @@ require([
                 type: "simple",
                 symbol: {
                     type: "simple-line",
-                    width: 2,
+                    width: layerSymbols.lineWidth,
                     color: layerQueries.Studies.color,
                 },
             },
@@ -278,7 +364,7 @@ require([
                 type: "simple",
                 symbol: {
                     type: "simple-marker",
-                    size: 6,
+                    size: layerSymbols.pointSize,
                     color: layerQueries.Studies.color,
                 },
             },
@@ -302,7 +388,7 @@ require([
                 type: "simple",
                 symbol: {
                     type: "simple-line",
-                    width: 2,
+                    width: layerSymbols.lineWidth,
                     color: layerQueries.Construction.color,
                 },
             },
@@ -317,7 +403,7 @@ require([
                 type: "simple",
                 symbol: {
                     type: "simple-marker",
-                    size: 6,
+                    size: layerSymbols.pointSize,
                     color: layerQueries.Construction.color,
                 },
             },
@@ -341,7 +427,7 @@ require([
                 type: "simple",
                 symbol: {
                     type: "simple-line",
-                    width: 2,
+                    width: layerSymbols.lineWidth,
                     color: layerQueries.SubstantiallyComplete.color,
                 },
             },
@@ -356,7 +442,7 @@ require([
                 type: "simple",
                 symbol: {
                     type: "simple-marker",
-                    size: 6,
+                    size: layerSymbols.pointSize,
                     color: layerQueries.SubstantiallyComplete.color,
                 },
             },
@@ -380,7 +466,7 @@ require([
                 type: "simple",
                 symbol: {
                     type: "simple-line",
-                    width: 2,
+                    width: layerSymbols.lineWidth,
                     color: layerQueries.AllProjects.color,
                 },
             },
@@ -395,7 +481,7 @@ require([
                 type: "simple",
                 symbol: {
                     type: "simple-marker",
-                    size: 6,
+                    size: layerSymbols.pointSize,
                     color: layerQueries.AllProjects.color,
                 },
             },
@@ -414,55 +500,89 @@ require([
 
         // labels for the mpLayer (mile posts)
         const mpLabel = new LabelClass({
-            labelExpressionInfo: { expression: "$feature.Measure" },
-                symbol: {
-                    type: "text",
-                    color: "black",
-                    haloSize: 1,
-                    haloColor: "white",
+            labelExpressionInfo: { expression: "'Mile ' + TextFormatting.NewLine + $feature.MP" },
+            symbol: {
+                type: "text",
+                color: "black",
+                haloSize: 1.5,
+                haloColor: "white",
                 font: {
                     family: "Ubuntu Mono",
                     size: 9,
                     weight: "bold",
                 },
             },
-            labelPlacement: "center-center",
+            labelPlacement: "center-right",
+            minScale: 25000,
         });
 
-        // *** ToDo: create labels for the 10th mile points
-
-        const selectSymbol = new SimpleMarkerSymbol({
-            color: "lime",
-            outline: {
-                color: [128, 128, 128, 0.5],
-                width: "0.6px",
+        const mpLabel10th = new LabelClass({
+            labelExpressionInfo: { expression: "$feature.MP" },
+            symbol: {
+                type: "text",
+                color: "black",
+                haloSize: 0.8,
+                haloColor: "white",
+                font: {
+                    family: "Ubuntu Mono",
+                    size: 7,
+                    weight: "bold",
+                },
             },
+            labelPlacement: "center-right",
+            minScale: 25000,
         });
 
         const mpLayer = new FeatureLayer({
-            url: "https://services1.arcgis.com/99lidPhWCzftIe9K/ArcGIS/rest/services/UDOTMileposts/FeatureServer/0",
             title: "UDOT Mileposts",
+            url: "https://services1.arcgis.com/99lidPhWCzftIe9K/ArcGIS/rest/services/UDOTMileposts/FeatureServer/0",
+            visible: true,
+            minScale: 25000,
             labelingInfo: mpLabel,
             renderer: {
                 type: "simple",
-                symbol: selectSymbol,
+                symbol: {
+                    type: "simple-marker",
+                    style: "square",
+                    size: 8,
+                    color: "white",
+                    outline: {
+                        width: 1,
+                        color: "black",
+                    }
+                }
             },
-            visible: true,
         });
 
         // *** ToDo: create scale-dependent renderer for the 10th mile points
+        // *** ToDo: create labels for the 10th mile points
 
         const mpLayer10th = new FeatureLayer({
-            url: "https://services1.arcgis.com/99lidPhWCzftIe9K/ArcGIS/rest/services/UDOTTenthMileRefPoints/FeatureServer/0",
             title: "UDOT Tenth Mile Reference Points",
+            url: "https://services1.arcgis.com/99lidPhWCzftIe9K/ArcGIS/rest/services/UDOTTenthMileRefPoints/FeatureServer/0",
             visible: true,
+            minScale: 8000,
+            labelingInfo: mpLabel10th,
+            renderer: {
+                type: "simple",
+                symbol: {
+                    type: "simple-marker",
+                    style: "square",
+                    size: 5,
+                    color: "white",
+                    outline: {
+                        width: 0.5,
+                        color: "black",
+                    }
+                }
+            },
         });
 
         const groupMileposts = new GroupLayer({
             title: "UDOT Mileposts",
             layers: [mpLayer10th, mpLayer],
             visibilityMode: "independent",
-            visible: false,
+            visible: true,
         })
 
 
@@ -651,10 +771,27 @@ require([
         view.ui.add(locateWidget, "top-left");
 
 
+        // Tabbed Div widget
+        // shows/hids the tabbed table Div
+
+        tabDivToggle = () => {
+            view.ui.add("btn-tabDiv", "top-right");
+            const btn = document.getElementById("btn-tabDiv");
+            const tabDiv = document.getElementById("tabDiv");
+
+            // listen for clicks,  toggle visibility
+            btn.addEventListener("click", () => {
+                if (tabDiv.style.display === "none") {
+                    tabDiv.style.display = "block";
+                } else {
+                    tabDiv.style.display = "none";
+                }
+            });
+        };
+        tabDivToggle();
+
         // ** FeatureTables
         // These go in the tabbed Calcite component widget at the bottom of the map
-
-        // ToDo: Find a way to expand/collapse or show/hide this widget
 
         const plannedTable = new FeatureTable({
             layer: plannedLines,

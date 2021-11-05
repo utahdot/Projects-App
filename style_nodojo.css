@@ -24,6 +24,14 @@ body {
     margin-left: 2%;
     height: 30%;
     overflow-x: hidden;
+    z-index: 1;
+}
+
+/* Resize the Popup container
+    This is not yet working. */
+
+div.esri-popup__main-container {
+    max-height: 40%;
 }
 
 calcite-tab-nav {
@@ -69,6 +77,8 @@ h2.esri-popup__header-title {
     font-style: italic;
     font-weight: bold;
 }
+
+
 
 /* div.esri-feature-content {} */
 
