@@ -8,7 +8,6 @@ require([
     "esri/layers/FeatureLayer",
     "esri/layers/GroupLayer",
     "esri/layers/support/LabelClass",
-    "esri/symbols/SimpleMarkerSymbol",
     "esri/widgets/FeatureTable",
     "esri/widgets/LayerList",
     "esri/widgets/BasemapGallery",
@@ -24,7 +23,6 @@ require([
     FeatureLayer,
     GroupLayer,
     LabelClass,
-    SimpleMarkerSymbol,
     FeatureTable,
     LayerList,
     BasemapGallery,
@@ -81,30 +79,6 @@ require([
             lineWidth: 2,
             pointSize: 6
         };
-
-
-
-        // ** Popup template
-        // const epmPopup = {
-        //     title: '{PIN_DESC}',
-        //     content:
-        //          '{PIN}<br />'
-        //         +'{PIN_DESC}<br />'
-        //         +'{REGION_CD}<br />'
-        //         +'{PIN_STAT_NM}<br />'
-        //         +'{PROGRAM}<br />'
-        //         +'{PUBLIC_DESC}<br />'
-        //         +'{PUB_CTC_NM}<br />'
-        //         +'{PUB_CTC_PH}<br />'
-        //         +'{PUB_CTC_EMAIL}<br />'
-        //         +'{FORECAST_ST_YR}<br />'
-        //         +'{START_DAT}<br />'
-        //         +'{EPM_PLAN_END_DATE}<br />'
-        //         +'{PROJECT_VALUE}<br />'
-        //         +'{FED_DOLLARS}<br />'
-        //         +'{STATE_DOLLARS}<br />'
-        //         +'{TOTAL_EXPENDITURES}<br />'
-        // };
 
         const epmPopup = {
             title: '{PIN_DESC}',
@@ -212,10 +186,6 @@ require([
                             fieldName: "",
                         },
                     ]
-                },
-                {
-                    type: "text",
-                    text: "<b>ADDITIONAL INFORMATION</b>"
                 },
             ]
         };
@@ -790,8 +760,101 @@ require([
         };
         tabDivToggle();
 
+
+        // *** CSV Export
+        // Save selected item(s) to a text file
+        // https://www.youtube.com/watch?v=3gX2oM5CRbo
+
+        let resultFeatures = [];
+
+        function setupCSV() {
+            view.ui.add("btn-exportDiv", "top-right");
+            const btn = document.getElementById("btn-exportDiv");  // FIX:  This is not in the correct spot on the UI
+            btn.addEventListener("click", () => {
+                if (resultFeatures.length) {
+                    // export to csv
+                    const attrs = resultFeatures.map(a => a.attributes);
+                    const headers = {};
+                    const entry = attrs[0];
+
+                    for (let key in entry) {
+                        if (entry.hasOwnProperty(key)) {
+                            headers[key] = key;
+                        }
+                    }
+
+                    exportCSVFile(headers, attrs, "export");
+                }
+            });
+        }
+
+        // export functions
+        // https://medium.com/@danny.pule/export-json-to-csv-file-using-javascript-a0b7bc5b00d2
+        function convertToCSV(objArray) {
+            const array = typeof objArray != "object" ? JSON.parse(objArray) : objArray;
+            let str = "";
+
+            for (let i = 0; i < array.length; i++) {
+                let line = "";
+                for (let index in array[i]) {
+                    if (line != "") {
+                        line += ",";
+                    }
+                    line += array[i][index];
+                }
+                str += line + "\r\n";
+            }
+
+            return str;
+        }
+
+        function exportCSVFile(headers, items, fileTitle) {
+            if (headers) {
+                items.unshift(headers);
+            }
+
+            // Convert Object to JSON
+            let jsonObject = JSON.stringify(items);
+
+            const csv = convertToCSV(jsonObject);
+
+            const exportedFilenmae = fileTitle + ".csv" || "export.csv";
+
+            const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+
+            if (navigator.msSaveBlob) {
+                // IE 10+
+                navigator.msSaveBlob(blob, exportedFilenmae);
+            } else {
+                const link = document.createElement("a");
+                if (link.download !== undefined) {
+                    // feature detection
+                    // Browsers that support HTML5 download attribute
+                    const url = URL.createObjectURL(blob);
+                    link.setAttribute("href", url);
+                    link.setAttribute("download", exportedFilenmae);
+                    link.style.visibility = "hidden";
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }
+            }
+        }
+
+        // end of CSV Export
+
+
         // ** FeatureTables
         // These go in the tabbed Calcite component widget at the bottom of the map
+
+        // Configure field formats:
+        //  "Number and Date formatting is not yet supported"
+        //   https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-FeatureTable.html
+
+
+        const fieldConfigs = [
+            {},
+        ];
 
         const plannedTable = new FeatureTable({
             layer: plannedLines,

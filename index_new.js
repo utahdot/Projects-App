@@ -132,13 +132,17 @@ require([
       +'<p style="line-height:1.2;margin-top:0pt;margin-bottom:0pt;"><a href="https://data-uplan.opendata.arcgis.com/datasets/epm-all-projects-as-lines" rel="nofollow ugc" target="_blank">Click to launch Open Data</a></p>'
       +'</b>';
 
+
     const epmPopup = {
       content: epmPopUpText,
       title: "{PIN_DESC}",
     };
 
 
-    // get all of the checkboxes
+    // *** Toggle visibility of layers using checkboxes
+    // ** This is replaced by the LayerList widget
+
+    // get all of the checkboxes from the DOM
     let selectorClass = document.querySelectorAll(".layerSelect");
 
     // checkbox for the milepost layer
@@ -531,6 +535,7 @@ require([
 
   // toggling the map layers
   // when the layer's checkbox is checked or unchecked, the point and line featureLayers are turned on or off
+  // this function is not needed when using LayerList widget
 
   function toggleLayers() {
     try {
@@ -539,7 +544,7 @@ require([
           if (i.value == "mp") {
             mpView.visible = true;
           } else {
-            mapLayers[i.value].point.visible = true;
+            mapLayers[i.value].point.visible = true;  // Error here: Cannot set properties of null (setting 'visible')
             mapLayers[i.value].line.visible = true;
           }
         } else {
@@ -557,13 +562,12 @@ require([
         mpView.visible = false;
       }
     } catch (error) {
-      console.log("initializing...");
+      console.log("Error caught: ", error);
     }
   }
 
 
-  // call toggleLayers() to toggle map layers
-  // each Layer in the widget is two separate feature classes (line and point)
+  // Each layer in the checkbox
 
   // "Planned" layer
   view.whenLayerView(plannedLines).then(function (layer) {
