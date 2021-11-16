@@ -37,37 +37,37 @@ require([
         // ** FeatureLayer definitions
         // Stored as objects for use with points and lines layers
         const layerQueries = {
-            Finished: {
+            finished: {
                 definitionExpression:
                     "PIN_STAT_NM IN ('Central Review', 'Close Out', 'Closed', 'Contract Closed Out', 'Contract Complete', 'Physically Complete', 'Region Review')",
                 color: "red",
             },
-            InDesign: {
+            inDesign: {
                 definitionExpression:
                     "PROJ_TYP_NM <> 'Studies' AND PIN_STAT_NM IN ('Active', 'Concept Scoping', 'Advertised', 'Awarded', 'Concept Active', 'Concept Cmplt', 'Scoping')",
                 color: "yellow",
             },
-            Planned: {
+            planned: {
                 definitionExpression:
                     "PROJ_TYP_NM <> 'Studies' AND (PIN_STAT_NM IN ('STIP', 'Funding') OR (PIN_STAT_NM = 'Proposed' AND REGION_PRTY < 999))",
                 color: "black",
             },
-            Studies: {
+            studies: {
                 definitionExpression:
                     "(UPPER(PIN_DESC) LIKE '%STUD%' OR UPPER(PUBLIC_DESC) LIKE '%STUD%' OR PROJ_TYP_NM = 'Studies') AND PIN_STAT_NM NOT IN ('Central Review', 'Close Out', 'Closed', 'Contract Closed Out', 'Contract Complete', 'Physically Complete', 'Region Review')",
                 color: "blue",
             },
-            Construction: {
+            construction: {
                 definitionExpression:
                     "PROJ_TYP_NM <> 'Studies' AND PIN_STAT_NM = 'Under Construction'",
                 color: "green",
             },
-            SubstantiallyComplete: {
+            substantiallyComplete: {
                 definitionExpression:
                     "PROJ_TYP_NM <> 'Studies' AND PIN_STAT_NM = 'Substantially Compl'",
                 color: "orange",
             },
-            AllProjects: {
+            allProjects: {
                 definitionExpression:
                     "1=1",
                 color: "purple",
@@ -191,34 +191,36 @@ require([
         };
 
 
-        // ** FeatureLayers and their GroupLayers
+        // ** FeatureLayers, FeatureLayerViews, and their GroupLayers
 
         // Planned
+        let plannedLinesView;  // FeatureLayerView
         const plannedLines = new FeatureLayer({
             title: "Planned Projects (linear)",
             url: "https://maps.udot.utah.gov/central/rest/services/EPM/EPM_All_Projects_as_Lines/MapServer/0",
-            definitionExpression: layerQueries.Planned.definitionExpression,
+            definitionExpression: layerQueries.planned.definitionExpression,
             renderer: {
                 type: "simple",
                 symbol: {
                     type: "simple-line",
                     width: layerSymbols.lineWidth,
-                    color: layerQueries.Planned.color,
+                    color: layerQueries.planned.color,
                 },
             },
             popupTemplate: epmPopup,
         });
 
+        let plannedPointsView;
         const plannedPoints = new FeatureLayer({
             title: "Planned Projects (points)",
             url: "https://maps.udot.utah.gov/central/rest/services/EPM/EPM_AllProjectsPoints/MapServer/0",
-            definitionExpression: layerQueries.Planned.definitionExpression,
+            definitionExpression: layerQueries.planned.definitionExpression,
             renderer: {
                 type: "simple",
                 symbol: {
                     type: "simple-marker",
                     size: layerSymbols.pointSize,
-                    color: layerQueries.Planned.color,
+                    color: layerQueries.planned.color,
                 },
             },
             popupTemplate: epmPopup,
@@ -232,32 +234,34 @@ require([
         });
 
 
-        // Finished
+        // finished
+        let finishedLinesView;
         const finishedLines = new FeatureLayer({
             title: "Finished Projects (linear)",
             url: "https://maps.udot.utah.gov/central/rest/services/EPM/EPM_All_Projects_as_Lines/MapServer/0",
-            definitionExpression: layerQueries.Finished.definitionExpression,
+            definitionExpression: layerQueries.finished.definitionExpression,
             renderer: {
                 type: "simple",
                 symbol: {
                     type: "simple-line",
                     width: layerSymbols.lineWidth,
-                    color: layerQueries.Finished.color,
+                    color: layerQueries.finished.color,
                 },
             },
             popupTemplate: epmPopup,
         });
 
+        let finishedPointsView;
         const finishedPoints = new FeatureLayer({
             title: "Finished Projects (points)",
             url: "https://maps.udot.utah.gov/central/rest/services/EPM/EPM_AllProjectsPoints/MapServer/0",
-            definitionExpression: layerQueries.Finished.definitionExpression,
+            definitionExpression: layerQueries.finished.definitionExpression,
             renderer: {
                 type: "simple",
                 symbol: {
                     type: "simple-marker",
                     size: layerSymbols.pointSize,
-                    color: layerQueries.Finished.color,
+                    color: layerQueries.finished.color,
                 },
             },
             popupTemplate: epmPopup,
@@ -272,31 +276,33 @@ require([
 
 
         // In Design
+        let inDesignLinesView;
         const inDesignLines = new FeatureLayer({
             title: "In Design Projects (linear)",
             url: "https://maps.udot.utah.gov/central/rest/services/EPM/EPM_All_Projects_as_Lines/MapServer/0",
-            definitionExpression: layerQueries.InDesign.definitionExpression,
+            definitionExpression: layerQueries.inDesign.definitionExpression,
             renderer: {
                 type: "simple",
                 symbol: {
                     type: "simple-line",
                     width: layerSymbols.lineWidth,
-                    color: layerQueries.InDesign.color,
+                    color: layerQueries.inDesign.color,
                 },
             },
             popupTemplate: epmPopup,
         });
 
+        let inDesignPointsView;
         const inDesignPoints = new FeatureLayer({
             title: "In Design Projects (points)",
             url: "https://maps.udot.utah.gov/central/rest/services/EPM/EPM_AllProjectsPoints/MapServer/0",
-            definitionExpression: layerQueries.InDesign.definitionExpression,
+            definitionExpression: layerQueries.inDesign.definitionExpression,
             renderer: {
                 type: "simple",
                 symbol: {
                     type: "simple-marker",
                     size: layerSymbols.pointSize,
-                    color: layerQueries.InDesign.color,
+                    color: layerQueries.inDesign.color,
                 },
             },
             popupTemplate: epmPopup,
@@ -311,31 +317,33 @@ require([
 
 
         // Studies
+        let studiesLinesView;
         const studiesLines = new FeatureLayer({
             title: "Studies Projects (linear)",
             url: "https://maps.udot.utah.gov/central/rest/services/EPM/EPM_All_Projects_as_Lines/MapServer/0",
-            definitionExpression: layerQueries.Studies.definitionExpression,
+            definitionExpression: layerQueries.studies.definitionExpression,
             renderer: {
                 type: "simple",
                 symbol: {
                     type: "simple-line",
                     width: layerSymbols.lineWidth,
-                    color: layerQueries.Studies.color,
+                    color: layerQueries.studies.color,
                 },
             },
             popupTemplate: epmPopup,
         });
 
+        let studiesPointsView;
         const studiesPoints = new FeatureLayer({
             title: "Studies Projects (points)",
             url: "https://maps.udot.utah.gov/central/rest/services/EPM/EPM_AllProjectsPoints/MapServer/0",
-            definitionExpression: layerQueries.Studies.definitionExpression,
+            definitionExpression: layerQueries.studies.definitionExpression,
             renderer: {
                 type: "simple",
                 symbol: {
                     type: "simple-marker",
                     size: layerSymbols.pointSize,
-                    color: layerQueries.Studies.color,
+                    color: layerQueries.studies.color,
                 },
             },
             popupTemplate: epmPopup,
@@ -350,31 +358,33 @@ require([
 
 
         // Construction
+        let constructionLinesView;
         const constructionLines = new FeatureLayer({
             title: "Construction Projects (linear)",
             url: "https://maps.udot.utah.gov/central/rest/services/EPM/EPM_All_Projects_as_Lines/MapServer/0",
-            definitionExpression: layerQueries.Construction.definitionExpression,
+            definitionExpression: layerQueries.construction.definitionExpression,
             renderer: {
                 type: "simple",
                 symbol: {
                     type: "simple-line",
                     width: layerSymbols.lineWidth,
-                    color: layerQueries.Construction.color,
+                    color: layerQueries.construction.color,
                 },
             },
             popupTemplate: epmPopup,
         });
 
+        let constructionPointsView;
         const constructionPoints = new FeatureLayer({
             title: "Construction Projects (points)",
             url: "https://maps.udot.utah.gov/central/rest/services/EPM/EPM_AllProjectsPoints/MapServer/0",
-            definitionExpression: layerQueries.Construction.definitionExpression,
+            definitionExpression: layerQueries.construction.definitionExpression,
             renderer: {
                 type: "simple",
                 symbol: {
                     type: "simple-marker",
                     size: layerSymbols.pointSize,
-                    color: layerQueries.Construction.color,
+                    color: layerQueries.construction.color,
                 },
             },
             popupTemplate: epmPopup,
@@ -389,31 +399,33 @@ require([
 
 
         // Substantially Complete
+        let substantiallyCompleteLinesView;
         const substantiallyCompleteLines = new FeatureLayer({
             title: "Substantially Complete Projects (linear)",
             url: "https://maps.udot.utah.gov/central/rest/services/EPM/EPM_All_Projects_as_Lines/MapServer/0",
-            definitionExpression: layerQueries.SubstantiallyComplete.definitionExpression,
+            definitionExpression: layerQueries.substantiallyComplete.definitionExpression,
             renderer: {
                 type: "simple",
                 symbol: {
                     type: "simple-line",
                     width: layerSymbols.lineWidth,
-                    color: layerQueries.SubstantiallyComplete.color,
+                    color: layerQueries.substantiallyComplete.color,
                 },
             },
             popupTemplate: epmPopup,
         });
 
-        const SubstantiallyCompletePoints = new FeatureLayer({
+        let substantiallyCompletePointsView;
+        const substantiallyCompletePoints = new FeatureLayer({
             title: "Substantially Complete Projects (points)",
             url: "https://maps.udot.utah.gov/central/rest/services/EPM/EPM_AllProjectsPoints/MapServer/0",
-            definitionExpression: layerQueries.SubstantiallyComplete.definitionExpression,
+            definitionExpression: layerQueries.substantiallyComplete.definitionExpression,
             renderer: {
                 type: "simple",
                 symbol: {
                     type: "simple-marker",
                     size: layerSymbols.pointSize,
-                    color: layerQueries.SubstantiallyComplete.color,
+                    color: layerQueries.substantiallyComplete.color,
                 },
             },
             popupTemplate: epmPopup,
@@ -421,38 +433,41 @@ require([
 
         const groupSubstantiallyComplete = new GroupLayer({
             title: "Substantially Complete Projects",
-            layers: [substantiallyCompleteLines, SubstantiallyCompletePoints],
+            layers: [substantiallyCompleteLines, substantiallyCompletePoints],
             visibilityMode: "independent",
             visible: false
         });
 
 
         // All Projects
+        // * This is the layer used for selection, and export to CSV
+        let allProjectsLinesView;
         const allProjectsLines = new FeatureLayer({
             title: "All Projects (linear)",
             url: "https://maps.udot.utah.gov/central/rest/services/EPM/EPM_All_Projects_as_Lines/MapServer/0",
-            definitionExpression: layerQueries.AllProjects.definitionExpression,
+            definitionExpression: layerQueries.allProjects.definitionExpression,
             renderer: {
                 type: "simple",
                 symbol: {
                     type: "simple-line",
                     width: layerSymbols.lineWidth,
-                    color: layerQueries.AllProjects.color,
+                    color: layerQueries.allProjects.color,
                 },
             },
             popupTemplate: epmPopup,
         });
 
+        let allProjectsPointsView;
         const allProjectsPoints = new FeatureLayer({
             title: "All Projects (points)",
             url: "https://maps.udot.utah.gov/central/rest/services/EPM/EPM_AllProjectsPoints/MapServer/0",
-            definitionExpression: layerQueries.AllProjects.definitionExpression,
+            definitionExpression: layerQueries.allProjects.definitionExpression,
             renderer: {
                 type: "simple",
                 symbol: {
                     type: "simple-marker",
                     size: layerSymbols.pointSize,
-                    color: layerQueries.AllProjects.color,
+                    color: layerQueries.allProjects.color,
                 },
             },
             popupTemplate: epmPopup,
@@ -586,6 +601,74 @@ require([
             }
         });
 
+        // Stuff to do after the view is loaded
+        view.when(() => {
+            console.log("View Ready")
+
+        });
+
+        // set up the LayerViews for each FeatureLayer
+
+        let featureLayerView;   // this is for the test code, below, to change appearance of
+                                // non-selected features.  Delete later, when that's set on
+                                // all featureLayerViews
+        // planned
+        view.whenLayerView(plannedLines).then((layer) => {
+            plannedLinesView = layer;
+            featureLayerView = plannedLinesView;
+        });
+        view.whenLayerView(plannedPoints).then((layer) => {
+            plannedPointsView = layer;
+        });
+
+        // finished
+        view.whenLayerView(finishedLines).then((layer) => {
+            finishedLinesView = layer;
+        });
+        view.whenLayerView(finishedPoints).then((layer) => {
+            finishedPointsView = layer;
+        });
+
+        // in design
+        view.whenLayerView(inDesignLines).then((layer) => {
+            inDesignLinesView = layer;
+        });
+        view.whenLayerView(inDesignPoints).then((layer) => {
+            inDesignPointsView = layer;
+        });
+
+        // studies
+        view.whenLayerView(studiesLines).then((layer) => {
+            studiesLinesView = layer;
+        });
+        view.whenLayerView(studiesPoints).then((layer) => {
+            studiesPointsView = layer;
+        });
+
+        // construction
+        view.whenLayerView(constructionLines).then((layer) => {
+            constructionLinesView = layer;
+        });
+        view.whenLayerView(constructionPoints).then((layer) => {
+            constructionPointsView = layer;
+        });
+
+        // substantially complete
+        view.whenLayerView(substantiallyCompleteLines).then((layer) => {
+            substantiallyCompleteLinesView = layer;
+        });
+        view.whenLayerView(substantiallyCompletePoints).then((layer) => {
+            substantiallyCompletePointsView = layer;
+        });
+
+        // all projects
+        view.whenLayerView(allProjectsLines).then((layer) => {
+            allProjectsLinesView = layer;
+        });
+        view.whenLayerView(allProjectsPoints).then((layer) => {
+            allProjectsPointsView = layer;
+        });
+
 
         // ** WIDGETS
 
@@ -593,6 +676,7 @@ require([
         let layerList = new LayerList({
             view: view,
         });
+
 
         // LayerList Expand widget
         let layerListExpand = new Expand({
@@ -742,8 +826,7 @@ require([
 
 
         // Tabbed Div widget
-        // shows/hids the tabbed table Div
-
+        // shows/hides the tabbed table Div
         tabDivToggle = () => {
             view.ui.add("btn-tabDiv", "top-right");
             const btn = document.getElementById("btn-tabDiv");
@@ -761,6 +844,126 @@ require([
         tabDivToggle();
 
 
+
+        // ** FeatureTables
+        // These go in the tabbed Calcite component widget at the bottom of the map
+
+        // Configure field formats:
+        //  "Number and Date formatting is not yet supported"
+        //   https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-FeatureTable.html
+
+
+        // Change the column labels to be more human-readable.
+        const fieldConfigs = [
+            {
+                name: "PROJECT_ID",
+                label: "Project ID",
+            },
+        ];
+
+        // create the new FeatureTables based on the FeatureLayers created above
+        const plannedTable = new FeatureTable({
+            layer: plannedLines,
+            view: view,
+            container: document.getElementById("tabPlanned"),
+            highlightOnRowSelectEnabled: false,
+            // fieldConfigs: fieldConfigs,
+        });
+
+        const finishedTable = new FeatureTable({
+            layer: finishedLines,
+            view: view,
+            container: document.getElementById("tabFinished"),
+        });
+
+        const inDesignTable = new FeatureTable({
+            layer: inDesignLines,
+            view: view,
+            container: document.getElementById("tabInDesign"),
+        });
+
+        const studiesTable = new FeatureTable({
+            layer: studiesLines,
+            view: view,
+            container: document.getElementById("tabStudies"),
+        });
+
+        const constructionTable = new FeatureTable({
+            layer: constructionLines,
+            view: view,
+            container: document.getElementById("tabConstruction"),
+        });
+
+        const substantiallyCompleteTable = new FeatureTable({
+            layer: substantiallyCompleteLines,
+            view: view,
+            container: document.getElementById("tabSubstantiallyComplete"),
+        });
+
+        const allProjectsTable = new FeatureTable({
+            layer: allProjectsLines,
+            view: view,
+            container: document.getElementById("tabAllProjects"),
+        });
+
+        /*
+         *  Functions for handling the selection of features from the map/tables,
+         *  and exporting those selections to CSV files
+         */
+
+
+        // Handle Selected Features
+        // sync the layerview effects and feature table selection
+        // based on: https://developers.arcgis.com/javascript/latest/sample-code/highlight-features-by-geometry/
+
+        // this array will keep track of the selected features' objectIDs
+        // to sync the layerview effects and the feature table selection
+        let selectedFeatures = [];
+
+        // test on the plannedTable line layer first
+        let featureTable = plannedTable; // Todo: register this event handler to all layers in the view
+
+
+        // listen for the featureTable's 'selection-change' event
+        featureTable.on("selection-change", (changes) => {
+
+            console.log("Table selection change:", changes);
+
+            changes.removed.forEach((item) => {   // loop through the removed objects array
+                // if a feature is removed in the selection-change event, its objectID appears in the
+                // changes.removed array
+
+                const data = selectedFeatures.find((d) => {
+                    // find() executes a function for each element in an array with parameter d
+                    // and returns the location in the array of the first item that is true
+
+                    // if the current item in the removed features array is in the selectedFeatures array
+                    // return the objectId of that time, or return undefined
+                    return d === item.objectId;
+                });
+
+                // use the splice() function to remove the item from the selectedFeatures array
+                if (data) {
+                    selectedFeatures.splice(selectedFeatures.indexOf(data), 1);
+                }
+            });
+
+            changes.added.forEach((item) => {   // loop through the added objects array
+                // add the objectId of each added item to the selectedFeatures array
+
+                selectedFeatures.push(item.objectId);
+            });
+
+            // set a visual effect on the excluded items to make them appear subdued
+            featureLayerView.effect = {
+                filter: {
+                    objectIds: selectedFeatures
+                },
+                excludedEffect: "blur(5px) grayscale(90%) opacity(40%)"
+            };
+        });
+
+
         // *** CSV Export
         // Save selected item(s) to a text file
         // https://www.youtube.com/watch?v=3gX2oM5CRbo
@@ -768,9 +971,12 @@ require([
         let resultFeatures = [];
 
         function setupCSV() {
+            // create UI button
             view.ui.add("btn-exportDiv", "top-right");
             const btn = document.getElementById("btn-exportDiv");  // FIX:  This is not in the correct spot on the UI
             btn.addEventListener("click", () => {
+                alert("This is not yet functional");
+
                 if (resultFeatures.length) {
                     // export to csv
                     const attrs = resultFeatures.map(a => a.attributes);
@@ -786,9 +992,20 @@ require([
                     exportCSVFile(headers, attrs, "export");
                 }
             });
-        }
+        };
+        setupCSV();
 
-        // export functions
+
+
+
+
+
+
+
+        // end of select feature handlers
+
+
+        // CSV export functions
         // https://medium.com/@danny.pule/export-json-to-csv-file-using-javascript-a0b7bc5b00d2
         function convertToCSV(objArray) {
             const array = typeof objArray != "object" ? JSON.parse(objArray) : objArray;
@@ -844,60 +1061,6 @@ require([
         // end of CSV Export
 
 
-        // ** FeatureTables
-        // These go in the tabbed Calcite component widget at the bottom of the map
-
-        // Configure field formats:
-        //  "Number and Date formatting is not yet supported"
-        //   https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-FeatureTable.html
-
-
-        const fieldConfigs = [
-            {},
-        ];
-
-        const plannedTable = new FeatureTable({
-            layer: plannedLines,
-            view: view,
-            container: document.getElementById("tabPlanned"),
-        });
-
-        const finishedTable = new FeatureTable({
-            layer: finishedLines,
-            view: view,
-            container: document.getElementById("tabFinished"),
-        });
-
-        const inDesignTable = new FeatureTable({
-            layer: inDesignLines,
-            view: view,
-            container: document.getElementById("tabInDesign"),
-        });
-
-        const studiesTable = new FeatureTable({
-            layer: studiesLines,
-            view: view,
-            container: document.getElementById("tabStudies"),
-        });
-
-        const constructionTable = new FeatureTable({
-            layer: constructionLines,
-            view: view,
-            container: document.getElementById("tabConstruction"),
-        });
-
-        const substantiallyCompleteTable = new FeatureTable({
-            layer: substantiallyCompleteLines,
-            view: view,
-            container: document.getElementById("tabSubstantiallyComplete"),
-        });
-
-        const allProjectsTable = new FeatureTable({
-            layer: allProjectsLines,
-            view: view,
-            container: document.getElementById("tabAllProjects"),
-        });
-
 
         // ** Asynchronous stuff
         // When first loading the map, watch for the view to finish updating
@@ -905,10 +1068,13 @@ require([
 
         // there is probably an event that fires when this happens. Cant' find it yet.
         watchUtils.whenFalseOnce(view, "updating", () => {
+
             // wait for the View to finish updating
+            console.log("View finished updating");
 
             // expand the LayerList widget
-            console.log("View finished updating");
             layerListExpand.expand();
+
         });
+
 });
