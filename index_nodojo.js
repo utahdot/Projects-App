@@ -3,6 +3,7 @@ require([
     "esri/config",
     "esri/Map",
     "esri/Graphic",
+    "esri/Color",
     "esri/views/MapView",
     "esri/core/watchUtils",
     "esri/layers/FeatureLayer",
@@ -18,6 +19,7 @@ require([
     esriConfig,
     Map,
     Graphic,
+    Color,
     MapView,
     watchUtils,
     FeatureLayer,
@@ -598,7 +600,13 @@ require([
                     breakpoint: false,
                     position: "top-right",
                 }
-            }
+            },
+            highlightOptions: {
+                color: "white",
+                fillOpacity: 1,
+                haloColor: new Color("#4d86c5"),   // UDOT blue
+                haloOpacity: 0.8,
+            },
         });
 
         // Stuff to do after the view is loaded
