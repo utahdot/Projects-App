@@ -6,6 +6,7 @@ require([
     "esri/Color",
     "esri/views/MapView",
     "esri/core/watchUtils",
+    "esri/geometry/Extent",
     "esri/layers/FeatureLayer",
     "esri/layers/GroupLayer",
     "esri/layers/support/LabelClass",
@@ -22,6 +23,7 @@ require([
     Color,
     MapView,
     watchUtils,
+    Extent,
     FeatureLayer,
     GroupLayer,
     LabelClass,
@@ -617,7 +619,8 @@ require([
 
         // Stuff to do asyncronously after the view is loaded
         view.when(() => {
-            console.log("View Ready")
+            console.log("View Ready");
+            console.log("Extent:" , view.extent);
         });
 
 
@@ -680,6 +683,7 @@ require([
                 featLayer: plannedLines,
                 layerView: plannedLinesView,
                 featTable: plannedTable,
+                groupLyr: groupPlanned,
             }, {
                 featLayer: plannedPoints,
                 layerView: plannedPointsView,
@@ -687,6 +691,7 @@ require([
                 featLayer: finishedLines,
                 layerView: finishedLinesView,
                 featTable: finishedTable,
+                groupLyr: groupFinished,
             }, {
                 featLayer: finishedPoints,
                 layerView: finishedPointsView,
@@ -694,6 +699,7 @@ require([
                 featLayer: inDesignLines,
                 layerView: inDesignLinesView,
                 featTable: inDesignTable,
+                groupLyr: groupInDesign,
             }, {
                 featLayer: inDesignPoints,
                 layerView: inDesignPointsView,
@@ -701,6 +707,7 @@ require([
                 featLayer: studiesLines,
                 layerView: studiesLinesView,
                 featTable: studiesTable,
+                groupLyr: groupStudies,
             }, {
                 featLayer: studiesPoints,
                 layerView: studiesPointsView,
@@ -708,6 +715,7 @@ require([
                 featLayer: constructionLines,
                 layerView: constructionLinesView,
                 featTable: constructionTable,
+                groupLyr: groupConstruction,
             }, {
                 featLayer: constructionPoints,
                 layerView: constructionPointsView,
@@ -715,6 +723,7 @@ require([
                 featLayer: substantiallyCompleteLines,
                 layerView: substantiallyCompleteLinesView,
                 featTable: substantiallyCompleteTable,
+                groupLyr: groupSubstantiallyComplete,
             }, {
                 featLayer: substantiallyCompletePoints,
                 layerView: substantiallyCompletePointsView,
@@ -722,11 +731,16 @@ require([
                 featLayer: allProjectsLines,
                 layerView: allProjectsLinesView,
                 featTable: allProjectsTable,
+                groupLyr: groupAllProjects,
             }, {
                 featLayer: allProjectsPoints,
                 layerView: allProjectsPointsView,
             },
         ];
+
+
+        // array tracks the selected features using objectIDs
+        const selectedFeatures = [];
 
 
         // ** LOOP THROUGH LAYERS and TABLES
@@ -735,6 +749,7 @@ require([
         udotProjects.forEach((lyr) => {
 
             // set up the LayerViews for each FeatureLayer
+
             view.whenLayerView(lyr.featLayer).then((layer) => {
                 lyr.layerView = layer;
             });
@@ -751,11 +766,69 @@ require([
                         }
                     });
                 });
+
+                // listen for the 'selection-change' event on all featureTables
+                // and update the selectedFeatures array with added/removed objectIDs
+
+                lyr.featTable.on("selection-change", (changes) => {
+
+                    console.log("Table selection change:", changes);
+
+                    // loop through the changes.removed array
+                    changes.removed.forEach((item) => {
+
+                        const data = selectedFeatures.find((d) => {
+                            // find() executes a function for each element in an array
+                            // if the current item in the removed features array is in the selectedFeatures array
+                            // return the objectId of that item, or return undefined
+
+                            return d === item.objectId;
+                        });
+
+                        if (data) {
+                            // use the splice() function to remove the item from the selectedFeatures array
+                            selectedFeatures.splice(selectedFeatures.indexOf(data), 1);
+                        }
+                    });
+
+                    changes.added.forEach((item) => {
+                        // loop through the added objects array
+                        // add the objectId of each added item to the selectedFeatures array
+
+                        selectedFeatures.push(item.objectId);
+                    });
+
+                    // at this point, the selectedFeatures array should contain the objectIDs of all
+                    // selected items in all featureTables
+                });
+
+
+
+
             }
         });
 
 
         // ** WIDGETS
+
+        // Zoom to State Boundaries
+        zoomToUtah = () => {
+            view.ui.add("btn-zoomUtah", "top-left");
+            const btn = document.getElementById("btn-zoomUtah");
+
+            // listen for clicks, then update zoom extent
+            btn.addEventListener("click", () => {
+                view.extent = new Extent({  // state boundaries in lat/lon
+                    xmin: -114,
+                    ymin: 37,
+                    xmax: -109,
+                    ymax: 42,
+                    spatialReference: {wkid: 4326},
+                });
+                view.zoom = view.zoom - 1;  // zoom out one zoom level
+            });
+        };
+        zoomToUtah();
 
         // LayerList widget
         let layerList = new LayerList({
@@ -931,11 +1004,6 @@ require([
 
 
 
-
-
-
-
-
         /*
          *  Functions for handling the selection of features from the map/tables,
          *  and exporting those selections to CSV files
@@ -944,59 +1012,13 @@ require([
 
         // Handle Selected Features
         // sync the layerview effects and feature table selection
-        // based on: https://developers.arcgis.com/javascript/latest/sample-code/highlight-features-by-geometry/
-
-        // this array will keep track of the selected features' objectIDs
-        // to sync the layerview effects and the feature table selection
-        let selectedFeatures = [];
-
-        // TEST: use the plannedTable FeatureTable first
-        let featureTable = plannedTable;
-        // Todo: register this event handler to all layers/tables in the view, or only the allProjectsTable
+        // based on:
+        //  https://developers.arcgis.com/javascript/latest/sample-code/highlight-features-by-geometry/
+        //  https://developers.arcgis.com/javascript/latest/sample-code/widgets-featuretable-map/
 
 
-        // listen for the featureTable's 'selection-change' event
-        // and update the selectedFeatures array with added/removed features
-        featureTable.on("selection-change", (changes) => {
 
-            console.log("Table selection change:", changes);
-
-            changes.removed.forEach((item) => {
-                // loop through the removed objects array
-                // if a feature is removed in the selection-change event, its objectID appears in the
-                // changes.removed array
-
-                const data = selectedFeatures.find((d) => {
-                    // find() executes a function for each element in an array
-                    // each element is assigned as parameter d
-                    // the location in the array of the first item that is true is returned
-
-                    // if the current item in the removed features array is in the selectedFeatures array
-                    // return the objectId of that item, or return undefined
-                    return d === item.objectId;
-                });
-
-                // use the splice() function to remove the item from the selectedFeatures array
-                if (data) {
-                    selectedFeatures.splice(selectedFeatures.indexOf(data), 1);
-                }
-            });
-
-            changes.added.forEach((item) => {
-                // loop through the added objects array
-                // add the objectId of each added item to the selectedFeatures array
-
-                selectedFeatures.push(item.objectId);
-            });
-
-            // set a visual effect on the excluded items to make them appear subdued
-            featureLayerView.effect = {
-                filter: {
-                    objectIds: selectedFeatures
-                },
-                excludedEffect: "blur(5px) grayscale(90%) opacity(40%)"
-            };
-        });
+        // Need to assign this to every table in the map view
 
 
 
