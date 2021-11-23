@@ -576,9 +576,61 @@ require([
             visible: true,
         })
 
-        // featureTables
+
+
+
+        // ** Map and MapView
+        const map = new Map({
+            basemap: "arcgis-navigation",
+            layers: [
+                groupMileposts,
+                groupAllProjects,
+                groupSubstantiallyComplete,
+                groupConstruction,
+                groupStudies,
+                groupInDesign,
+                groupFinished,
+                groupPlanned,
+            ],
+        });
+
+        const view = new MapView({
+            map: map,
+            center: [-111.90121, 40.76203],
+            zoom: 12,
+            container: "viewDiv",
+            popup: {
+                dockEnabled: true,
+                dockOptions: {
+                    buttonEnabled: false,
+                    breakpoint: false,
+                    position: "top-right",
+                }
+            },
+            highlightOptions: {
+                color: "white",
+                fillOpacity: 1,
+                haloColor: new Color("#4d86c5"),   // UDOT blue
+                haloOpacity: 0.8,
+            },
+        });
+
+        // Stuff to do asyncronously after the view is loaded
+        view.when(() => {
+            console.log("View Ready")
+        });
+
+
+
+        // ** FeatureTables
+
         // create the new FeatureTables based on the FeatureLayers created above
-        // add tables to the tabbed widget
+        // add tables to the tabbed Calcite component widget
+
+        // Configure field formats:
+        //  "Number and Date formatting is not yet supported"
+        //   https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-FeatureTable.html
+
         const plannedTable = new FeatureTable({
             layer: plannedLines,
             view: view,
@@ -622,52 +674,7 @@ require([
         });
 
 
-
-
-        // ** Map and MapView
-        const map = new Map({
-            basemap: "arcgis-navigation",
-            layers: [
-                groupMileposts,
-                groupAllProjects,
-                groupSubstantiallyComplete,
-                groupConstruction,
-                groupStudies,
-                groupInDesign,
-                groupFinished,
-                groupPlanned,
-            ],
-        });
-
-        const view = new MapView({
-            map: map,
-            center: [-111.90121, 40.76203],
-            zoom: 12,
-            container: "viewDiv",
-            popup: {
-                dockEnabled: true,
-                dockOptions: {
-                    buttonEnabled: false,
-                    breakpoint: false,
-                    position: "top-right",
-                }
-            },
-            highlightOptions: {
-                color: "white",
-                fillOpacity: 1,
-                haloColor: new Color("#4d86c5"),   // UDOT blue
-                haloOpacity: 0.8,
-            },
-        });
-
-        // Stuff to do after the view is loaded
-        view.when(() => {
-            console.log("View Ready")
-
-        });
-
-
-
+        // array of objects (for looping over FeatureLayers and FeatureTables)
         var udotProjects = [
             {
                 featLayer: plannedLines,
@@ -721,23 +728,31 @@ require([
             },
         ];
 
-        // set up the LayerViews for each FeatureLayer
+
+        // ** LOOP THROUGH LAYERS and TABLES
+        // assign properties and events to each
+
         udotProjects.forEach((lyr) => {
+
+            // set up the LayerViews for each FeatureLayer
             view.whenLayerView(lyr.featLayer).then((layer) => {
                 lyr.layerView = layer;
             });
+
+            // listen for when the view is updated.
+            // assign filters to featureTables to only show projects in the view extent
+            // TODO: Add a button or checkbox to toggle this function
+
+            if (lyr.featTable) {
+                lyr.featLayer.watch("loaded", () => {
+                    watchUtils.whenFalse(view, "updating", () => {
+                        if (view.extent) {
+                            lyr.featTable.filterGeometry = view.extent;
+                        }
+                    });
+                });
+            }
         });
-
-
-
-        // let featureLayerView;   // this is for the test code, below, to change appearance of
-        //                         // non-selected features.  Delete later, when that's set on
-        //                         // all featureLayerViews
-        // // planned
-        // view.whenLayerView(plannedLines).then((layer) => {
-        //     plannedLinesView = layer;
-        //     featureLayerView = plannedLinesView;
-        // });
 
 
         // ** WIDGETS
@@ -913,31 +928,6 @@ require([
         };
         tabDivToggle();
 
-
-
-        // ** FeatureTables
-        // These go in the tabbed Calcite component widget at the bottom of the map
-
-        // Configure field formats:
-        //  "Number and Date formatting is not yet supported"
-        //   https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-FeatureTable.html
-
-
-
-        /* <div class="esri-feature-table__title">
-        *    Add a button or checkbox to filter projects in table by view extent
-        */
-
-        // Listen for when the view is updated. If so, pass the new view.extent into the table's filterGeometry
-        plannedLines.watch("loaded", () => {
-            watchUtils.whenFalse(view, "updating", () => {
-                // Get the new extent of view/map whenever map is updated.
-                if (view.extent) {
-                    // Filter out and show only the visible features in the feature table
-                    plannedTable.filterGeometry = view.extent;
-                }
-            });
-        });
 
 
 
