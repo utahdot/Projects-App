@@ -193,6 +193,7 @@ require([
         };
 
 
+
         // ** FeatureLayers, FeatureLayerViews, and their GroupLayers
 
         // Planned
@@ -520,6 +521,12 @@ require([
             minScale: 25000,
         });
 
+
+        // UDOT Milepost featureLayers
+        // 1 mile and 1/10 mile points
+        // *** ToDo: create scale-dependent renderer for the 10th mile points
+        // *** ToDo: create labels for the 10th mile points
+
         const mpLayer = new FeatureLayer({
             title: "UDOT Mileposts",
             url: "https://services1.arcgis.com/99lidPhWCzftIe9K/ArcGIS/rest/services/UDOTMileposts/FeatureServer/0",
@@ -540,9 +547,6 @@ require([
                 }
             },
         });
-
-        // *** ToDo: create scale-dependent renderer for the 10th mile points
-        // *** ToDo: create labels for the 10th mile points
 
         const mpLayer10th = new FeatureLayer({
             title: "UDOT Tenth Mile Reference Points",
@@ -571,6 +575,53 @@ require([
             visibilityMode: "independent",
             visible: true,
         })
+
+        // featureTables
+        // create the new FeatureTables based on the FeatureLayers created above
+        // add tables to the tabbed widget
+        const plannedTable = new FeatureTable({
+            layer: plannedLines,
+            view: view,
+            container: document.getElementById("tabPlanned"),
+        });
+
+        const finishedTable = new FeatureTable({
+            layer: finishedLines,
+            view: view,
+            container: document.getElementById("tabFinished"),
+        });
+
+        const inDesignTable = new FeatureTable({
+            layer: inDesignLines,
+            view: view,
+            container: document.getElementById("tabInDesign"),
+        });
+
+        const studiesTable = new FeatureTable({
+            layer: studiesLines,
+            view: view,
+            container: document.getElementById("tabStudies"),
+        });
+
+        const constructionTable = new FeatureTable({
+            layer: constructionLines,
+            view: view,
+            container: document.getElementById("tabConstruction"),
+        });
+
+        const substantiallyCompleteTable = new FeatureTable({
+            layer: substantiallyCompleteLines,
+            view: view,
+            container: document.getElementById("tabSubstantiallyComplete"),
+        });
+
+        const allProjectsTable = new FeatureTable({
+            layer: allProjectsLines,
+            view: view,
+            container: document.getElementById("tabAllProjects"),
+        });
+
+
 
 
         // ** Map and MapView
@@ -615,67 +666,78 @@ require([
 
         });
 
+
+
+        var udotProjects = [
+            {
+                featLayer: plannedLines,
+                layerView: plannedLinesView,
+                featTable: plannedTable,
+            }, {
+                featLayer: plannedPoints,
+                layerView: plannedPointsView,
+            }, {
+                featLayer: finishedLines,
+                layerView: finishedLinesView,
+                featTable: finishedTable,
+            }, {
+                featLayer: finishedPoints,
+                layerView: finishedPointsView,
+            }, {
+                featLayer: inDesignLines,
+                layerView: inDesignLinesView,
+                featTable: inDesignTable,
+            }, {
+                featLayer: inDesignPoints,
+                layerView: inDesignPointsView,
+            }, {
+                featLayer: studiesLines,
+                layerView: studiesLinesView,
+                featTable: studiesTable,
+            }, {
+                featLayer: studiesPoints,
+                layerView: studiesPointsView,
+            }, {
+                featLayer: constructionLines,
+                layerView: constructionLinesView,
+                featTable: constructionTable,
+            }, {
+                featLayer: constructionPoints,
+                layerView: constructionPointsView,
+            }, {
+                featLayer: substantiallyCompleteLines,
+                layerView: substantiallyCompleteLinesView,
+                featTable: substantiallyCompleteTable,
+            }, {
+                featLayer: substantiallyCompletePoints,
+                layerView: substantiallyCompletePointsView,
+            }, {
+                featLayer: allProjectsLines,
+                layerView: allProjectsLinesView,
+                featTable: allProjectsTable,
+            }, {
+                featLayer: allProjectsPoints,
+                layerView: allProjectsPointsView,
+            },
+        ];
+
         // set up the LayerViews for each FeatureLayer
-
-        let featureLayerView;   // this is for the test code, below, to change appearance of
-                                // non-selected features.  Delete later, when that's set on
-                                // all featureLayerViews
-        // planned
-        view.whenLayerView(plannedLines).then((layer) => {
-            plannedLinesView = layer;
-            featureLayerView = plannedLinesView;
-        });
-        view.whenLayerView(plannedPoints).then((layer) => {
-            plannedPointsView = layer;
+        udotProjects.forEach((lyr) => {
+            view.whenLayerView(lyr.featLayer).then((layer) => {
+                lyr.layerView = layer;
+            });
         });
 
-        // finished
-        view.whenLayerView(finishedLines).then((layer) => {
-            finishedLinesView = layer;
-        });
-        view.whenLayerView(finishedPoints).then((layer) => {
-            finishedPointsView = layer;
-        });
 
-        // in design
-        view.whenLayerView(inDesignLines).then((layer) => {
-            inDesignLinesView = layer;
-        });
-        view.whenLayerView(inDesignPoints).then((layer) => {
-            inDesignPointsView = layer;
-        });
 
-        // studies
-        view.whenLayerView(studiesLines).then((layer) => {
-            studiesLinesView = layer;
-        });
-        view.whenLayerView(studiesPoints).then((layer) => {
-            studiesPointsView = layer;
-        });
-
-        // construction
-        view.whenLayerView(constructionLines).then((layer) => {
-            constructionLinesView = layer;
-        });
-        view.whenLayerView(constructionPoints).then((layer) => {
-            constructionPointsView = layer;
-        });
-
-        // substantially complete
-        view.whenLayerView(substantiallyCompleteLines).then((layer) => {
-            substantiallyCompleteLinesView = layer;
-        });
-        view.whenLayerView(substantiallyCompletePoints).then((layer) => {
-            substantiallyCompletePointsView = layer;
-        });
-
-        // all projects
-        view.whenLayerView(allProjectsLines).then((layer) => {
-            allProjectsLinesView = layer;
-        });
-        view.whenLayerView(allProjectsPoints).then((layer) => {
-            allProjectsPointsView = layer;
-        });
+        // let featureLayerView;   // this is for the test code, below, to change appearance of
+        //                         // non-selected features.  Delete later, when that's set on
+        //                         // all featureLayerViews
+        // // planned
+        // view.whenLayerView(plannedLines).then((layer) => {
+        //     plannedLinesView = layer;
+        //     featureLayerView = plannedLinesView;
+        // });
 
 
         // ** WIDGETS
@@ -861,58 +923,28 @@ require([
         //   https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-FeatureTable.html
 
 
-        // Change the column labels to be more human-readable.
-        const fieldConfigs = [
-            {
-                name: "PROJECT_ID",
-                label: "Project ID",
-            },
-        ];
 
-        // create the new FeatureTables based on the FeatureLayers created above
-        const plannedTable = new FeatureTable({
-            layer: plannedLines,
-            view: view,
-            container: document.getElementById("tabPlanned"),
-            highlightOnRowSelectEnabled: false,
-            // fieldConfigs: fieldConfigs,
+        /* <div class="esri-feature-table__title">
+        *    Add a button or checkbox to filter projects in table by view extent
+        */
+
+        // Listen for when the view is updated. If so, pass the new view.extent into the table's filterGeometry
+        plannedLines.watch("loaded", () => {
+            watchUtils.whenFalse(view, "updating", () => {
+                // Get the new extent of view/map whenever map is updated.
+                if (view.extent) {
+                    // Filter out and show only the visible features in the feature table
+                    plannedTable.filterGeometry = view.extent;
+                }
+            });
         });
 
-        const finishedTable = new FeatureTable({
-            layer: finishedLines,
-            view: view,
-            container: document.getElementById("tabFinished"),
-        });
 
-        const inDesignTable = new FeatureTable({
-            layer: inDesignLines,
-            view: view,
-            container: document.getElementById("tabInDesign"),
-        });
 
-        const studiesTable = new FeatureTable({
-            layer: studiesLines,
-            view: view,
-            container: document.getElementById("tabStudies"),
-        });
 
-        const constructionTable = new FeatureTable({
-            layer: constructionLines,
-            view: view,
-            container: document.getElementById("tabConstruction"),
-        });
 
-        const substantiallyCompleteTable = new FeatureTable({
-            layer: substantiallyCompleteLines,
-            view: view,
-            container: document.getElementById("tabSubstantiallyComplete"),
-        });
 
-        const allProjectsTable = new FeatureTable({
-            layer: allProjectsLines,
-            view: view,
-            container: document.getElementById("tabAllProjects"),
-        });
+
 
         /*
          *  Functions for handling the selection of features from the map/tables,
@@ -928,25 +960,29 @@ require([
         // to sync the layerview effects and the feature table selection
         let selectedFeatures = [];
 
-        // test on the plannedTable line layer first
-        let featureTable = plannedTable; // Todo: register this event handler to all layers in the view
+        // TEST: use the plannedTable FeatureTable first
+        let featureTable = plannedTable;
+        // Todo: register this event handler to all layers/tables in the view, or only the allProjectsTable
 
 
         // listen for the featureTable's 'selection-change' event
+        // and update the selectedFeatures array with added/removed features
         featureTable.on("selection-change", (changes) => {
 
             console.log("Table selection change:", changes);
 
-            changes.removed.forEach((item) => {   // loop through the removed objects array
+            changes.removed.forEach((item) => {
+                // loop through the removed objects array
                 // if a feature is removed in the selection-change event, its objectID appears in the
                 // changes.removed array
 
                 const data = selectedFeatures.find((d) => {
-                    // find() executes a function for each element in an array with parameter d
-                    // and returns the location in the array of the first item that is true
+                    // find() executes a function for each element in an array
+                    // each element is assigned as parameter d
+                    // the location in the array of the first item that is true is returned
 
                     // if the current item in the removed features array is in the selectedFeatures array
-                    // return the objectId of that time, or return undefined
+                    // return the objectId of that item, or return undefined
                     return d === item.objectId;
                 });
 
@@ -956,7 +992,8 @@ require([
                 }
             });
 
-            changes.added.forEach((item) => {   // loop through the added objects array
+            changes.added.forEach((item) => {
+                // loop through the added objects array
                 // add the objectId of each added item to the selectedFeatures array
 
                 selectedFeatures.push(item.objectId);
@@ -972,16 +1009,19 @@ require([
         });
 
 
+
+
+
         // *** CSV Export
         // Save selected item(s) to a text file
         // https://www.youtube.com/watch?v=3gX2oM5CRbo
 
-        let resultFeatures = [];
+        let resultFeatures = [];   // is this the selectedFeatures array?
 
         function setupCSV() {
             // create UI button
             view.ui.add("btn-exportDiv", "top-right");
-            const btn = document.getElementById("btn-exportDiv");  // FIX:  This is not in the correct spot on the UI
+            const btn = document.getElementById("btn-exportDiv");
             btn.addEventListener("click", () => {
                 alert("This is not yet functional");
 
@@ -1002,15 +1042,6 @@ require([
             });
         };
         setupCSV();
-
-
-
-
-
-
-
-
-        // end of select feature handlers
 
 
         // CSV export functions
