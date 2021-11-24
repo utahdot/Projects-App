@@ -26,13 +26,6 @@ body {
     overflow-x: hidden;
 }
 
-/* Resize the Popup container
-    This is not working.
-    Might require Sass */
-div.esri-popup__main-container {
-    max-height: 40%;
-}
-
 calcite-tab-nav {
     padding-top: 5px;
 }
@@ -77,4 +70,8 @@ h2.esri-popup__header-title {
 }
 
 /* Widget styling test
-   See SCSS code at: https://github.com/Esri/arcgis-js-api/tree/4master/assets/esri/themes/base/widgets
+   See SCSS code at: https://github.com/Esri/arcgis-js-api/tree/4master/assets/esri/themes/base/widgets */
+
+.esri-popup--is-docked-top-right .esri-popup__main-container {
+    max-height: 65%;
+}

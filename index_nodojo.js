@@ -38,52 +38,19 @@ require([
         // API key for accessing newer Esri basemaps
         esriConfig.apiKey = "AAPKc422669b0fbe46a2b56d697c4dd3384cYslFfknNEQtB3WgUxoiEsPrfUr2viZq0XYQqCSdSjTKTldmVSiccSYqaz_2hLWPa"
 
-        // ** FeatureLayer definitions
-        // Stored as objects for use with points and lines layers
-        const layerQueries = {
-            finished: {
-                definitionExpression:
-                    "PIN_STAT_NM IN ('Central Review', 'Close Out', 'Closed', 'Contract Closed Out', 'Contract Complete', 'Physically Complete', 'Region Review')",
-                color: "red",
-            },
-            inDesign: {
-                definitionExpression:
-                    "PROJ_TYP_NM <> 'Studies' AND PIN_STAT_NM IN ('Active', 'Concept Scoping', 'Advertised', 'Awarded', 'Concept Active', 'Concept Cmplt', 'Scoping')",
-                color: "yellow",
-            },
-            planned: {
-                definitionExpression:
-                    "PROJ_TYP_NM <> 'Studies' AND (PIN_STAT_NM IN ('STIP', 'Funding') OR (PIN_STAT_NM = 'Proposed' AND REGION_PRTY < 999))",
-                color: "black",
-            },
-            studies: {
-                definitionExpression:
-                    "(UPPER(PIN_DESC) LIKE '%STUD%' OR UPPER(PUBLIC_DESC) LIKE '%STUD%' OR PROJ_TYP_NM = 'Studies') AND PIN_STAT_NM NOT IN ('Central Review', 'Close Out', 'Closed', 'Contract Closed Out', 'Contract Complete', 'Physically Complete', 'Region Review')",
-                color: "blue",
-            },
-            construction: {
-                definitionExpression:
-                    "PROJ_TYP_NM <> 'Studies' AND PIN_STAT_NM = 'Under Construction'",
-                color: "green",
-            },
-            substantiallyComplete: {
-                definitionExpression:
-                    "PROJ_TYP_NM <> 'Studies' AND PIN_STAT_NM = 'Substantially Compl'",
-                color: "orange",
-            },
-            allProjects: {
-                definitionExpression:
-                    "1=1",
-                color: "purple",
-            },
-        };
+        // array tracks the selected features using objectIDs
+        const selectedFeatures = [];
 
+        /***********************************************************
+         *  FeatureLayers, FeatureLayerViews, and their GroupLayers
+         ***********************************************************/
         // set default symbology attributes
         const layerSymbols = {
             lineWidth: 2,
             pointSize: 6
         };
 
+        // Popup Formatting and Styling
         const epmPopup = {
             title: '{PIN_DESC}',
             content: [
@@ -194,9 +161,49 @@ require([
             ]
         };
 
+        // FeatureLayer attributes: SQL Query and Color
+        const layerQueries = {
+            finished: {
+                definitionExpression:
+                    "PIN_STAT_NM IN ('Central Review', 'Close Out', 'Closed', 'Contract Closed Out', 'Contract Complete', 'Physically Complete', 'Region Review')",
+                color: "red",
+            },
+            inDesign: {
+                definitionExpression:
+                    "PROJ_TYP_NM <> 'Studies' AND PIN_STAT_NM IN ('Active', 'Concept Scoping', 'Advertised', 'Awarded', 'Concept Active', 'Concept Cmplt', 'Scoping')",
+                color: "yellow",
+            },
+            planned: {
+                definitionExpression:
+                    "PROJ_TYP_NM <> 'Studies' AND (PIN_STAT_NM IN ('STIP', 'Funding') OR (PIN_STAT_NM = 'Proposed' AND REGION_PRTY < 999))",
+                color: "black",
+            },
+            studies: {
+                definitionExpression:
+                    "(UPPER(PIN_DESC) LIKE '%STUD%' OR UPPER(PUBLIC_DESC) LIKE '%STUD%' OR PROJ_TYP_NM = 'Studies') AND PIN_STAT_NM NOT IN ('Central Review', 'Close Out', 'Closed', 'Contract Closed Out', 'Contract Complete', 'Physically Complete', 'Region Review')",
+                color: "blue",
+            },
+            construction: {
+                definitionExpression:
+                    "PROJ_TYP_NM <> 'Studies' AND PIN_STAT_NM = 'Under Construction'",
+                color: "green",
+            },
+            substantiallyComplete: {
+                definitionExpression:
+                    "PROJ_TYP_NM <> 'Studies' AND PIN_STAT_NM = 'Substantially Compl'",
+                color: "orange",
+            },
+            allProjects: {
+                definitionExpression:
+                    "1=1",
+                color: "purple",
+            },
+        };
 
 
-        // ** FeatureLayers, FeatureLayerViews, and their GroupLayers
+        /***********************************************************
+         *  FeatureLayer instantiations
+         ***********************************************************/
 
         // Planned
         let plannedLinesView;  // FeatureLayerView
@@ -487,6 +494,7 @@ require([
 
 
         // UDOT Milepost layers
+        // 1 mile and 1/10 mile points
 
         // labels for the mpLayer (mile posts)
         const mpLabel = new LabelClass({
@@ -525,9 +533,6 @@ require([
 
 
         // UDOT Milepost featureLayers
-        // 1 mile and 1/10 mile points
-        // *** ToDo: create scale-dependent renderer for the 10th mile points
-        // *** ToDo: create labels for the 10th mile points
 
         const mpLayer = new FeatureLayer({
             title: "UDOT Mileposts",
@@ -579,9 +584,10 @@ require([
         })
 
 
+        /***********************************************************
+         *  Map and MapView
+         ***********************************************************/
 
-
-        // ** Map and MapView
         const map = new Map({
             basemap: "arcgis-navigation",
             layers: [
@@ -617,15 +623,42 @@ require([
             },
         });
 
-        // Stuff to do asyncronously after the view is loaded
+
+        /***********************************************************
+         *  Asynchronous Stuff
+         ***********************************************************/
+
+        // view is loaded
         view.when(() => {
             console.log("View Ready");
-            console.log("Extent:" , view.extent);
+
+            // Listen for the click on the view and select any associated row in the table
+            view.on("immediate-click", (event) => {
+                view.hitTest(event).then((response) => {
+                    const candidate = response.results.find((result) => {
+                        console.log(result.graphic.layer);
+                        // return result.graphic && result.graphic.layer && result.graphic.layer === plannedLines;  // TEST on plannedLines
+                    });
+                // Select the rows of the clicked feature
+                // candidate && plannedLines.selectRows(candidate.graphic);
+            });
+
+          });
+        });
+
+        // view (and all layers) finished updating after initial load
+        watchUtils.whenFalseOnce(view, "updating", () => {
+            // wait for the View to finish updating
+            console.log("View finished updating");
+
+            // expand the LayerList widget
+            layerListExpand.expand();
         });
 
 
-
-        // ** FeatureTables
+        /***********************************************************
+         *  FeatureTables
+         ***********************************************************/
 
         // create the new FeatureTables based on the FeatureLayers created above
         // add tables to the tabbed Calcite component widget
@@ -676,6 +709,9 @@ require([
             container: document.getElementById("tabAllProjects"),
         });
 
+        /***********************************************************
+         *  Layer functions: Event listeners and asynch functions
+         ***********************************************************/
 
         // array of objects (for looping over FeatureLayers and FeatureTables)
         var udotProjects = [
@@ -738,13 +774,7 @@ require([
             },
         ];
 
-
-        // array tracks the selected features using objectIDs
-        const selectedFeatures = [];
-
-
         // ** LOOP THROUGH LAYERS and TABLES
-        // assign properties and events to each
 
         udotProjects.forEach((lyr) => {
 
@@ -792,7 +822,7 @@ require([
                     });
 
                     changes.added.forEach((item) => {
-                        // loop through the added objects array
+                        // loop through the added objects array from the event
                         // add the objectId of each added item to the selectedFeatures array
 
                         selectedFeatures.push(item.objectId);
@@ -801,10 +831,6 @@ require([
                     // at this point, the selectedFeatures array should contain the objectIDs of all
                     // selected items in all featureTables
                 });
-
-
-
-
             }
         });
 
@@ -1005,30 +1031,12 @@ require([
 
 
         /*
-         *  Functions for handling the selection of features from the map/tables,
-         *  and exporting those selections to CSV files
+         *  Functions for exporting selectedFeatures array to CSV files
          */
-
-
-        // Handle Selected Features
-        // sync the layerview effects and feature table selection
-        // based on:
-        //  https://developers.arcgis.com/javascript/latest/sample-code/highlight-features-by-geometry/
-        //  https://developers.arcgis.com/javascript/latest/sample-code/widgets-featuretable-map/
-
-
-
-        // Need to assign this to every table in the map view
-
-
-
-
 
         // *** CSV Export
         // Save selected item(s) to a text file
         // https://www.youtube.com/watch?v=3gX2oM5CRbo
-
-        let resultFeatures = [];   // is this the selectedFeatures array?
 
         function setupCSV() {
             // create UI button
@@ -1037,9 +1045,9 @@ require([
             btn.addEventListener("click", () => {
                 alert("This is not yet functional");
 
-                if (resultFeatures.length) {
+                if (selectedFeatures.length) {
                     // export to csv
-                    const attrs = resultFeatures.map(a => a.attributes);
+                    const attrs = selectedFeatures.map(a => a.attributes);
                     const headers = {};
                     const entry = attrs[0];
 
@@ -1112,20 +1120,5 @@ require([
         // end of CSV Export
 
 
-
-        // ** Asynchronous stuff
-        // When first loading the map, watch for the view to finish updating
-        // make any changes to the UI here:
-
-        // there is probably an event that fires when this happens. Cant' find it yet.
-        watchUtils.whenFalseOnce(view, "updating", () => {
-
-            // wait for the View to finish updating
-            console.log("View finished updating");
-
-            // expand the LayerList widget
-            layerListExpand.expand();
-
-        });
 
 });
