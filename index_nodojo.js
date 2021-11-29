@@ -38,8 +38,10 @@ require([
         // API key for accessing newer Esri basemaps
         esriConfig.apiKey = "AAPKc422669b0fbe46a2b56d697c4dd3384cYslFfknNEQtB3WgUxoiEsPrfUr2viZq0XYQqCSdSjTKTldmVSiccSYqaz_2hLWPa"
 
-        // array tracks the selected features using objectIDs
-        const selectedFeatures = [];
+        // array tracks the selected feature objectIDs
+        // uses: sync the selections on map and featureTables, and export features as CSV
+        let selectedFeatures = [];
+
 
         /***********************************************************
          *  FeatureLayers, FeatureLayerViews, and their GroupLayers
@@ -778,26 +780,36 @@ require([
 
         udotProjects.forEach((lyr) => {
 
-            // set up the LayerViews for each FeatureLayer
+            // set up the LayerViews for each FeatureLayer (asynch)
 
             view.whenLayerView(lyr.featLayer).then((layer) => {
                 lyr.layerView = layer;
             });
 
-            // listen for when the view is updated.
-            // assign filters to featureTables to only show projects in the view extent
+            // Event Listeners: listen for when the view is updated
+            // assign spatial filters to featureTables to only show projects in the view extent
             // TODO: Add a button or checkbox to toggle this function
 
             if (lyr.featTable) {
                 lyr.featLayer.watch("loaded", () => {
+
                     watchUtils.whenFalse(view, "updating", () => {
+
+                        // BUG? This is clearing the selected features whenever the table is updated
+
                         if (view.extent) {
+
                             lyr.featTable.filterGeometry = view.extent;
+                            // "When modifying this property, the FeatureTable will completely refresh and re-query for all features."
+
+                            console.log("featureTable geometry updated: ", lyr.featLayer.title);
+                            console.log("selected: ", selectedFeatures);
+
                         }
                     });
                 });
 
-                // listen for the 'selection-change' event on all featureTables
+                // Event Listeners: listen for the 'selection-change' event on each featureTable
                 // and update the selectedFeatures array with added/removed objectIDs
 
                 lyr.featTable.on("selection-change", (changes) => {
@@ -811,6 +823,8 @@ require([
                             // find() executes a function for each element in an array
                             // if the current item in the removed features array is in the selectedFeatures array
                             // return the objectId of that item, or return undefined
+
+                            console.log("d:", d);
 
                             return d === item.objectId;
                         });
@@ -830,6 +844,8 @@ require([
 
                     // at this point, the selectedFeatures array should contain the objectIDs of all
                     // selected items in all featureTables
+
+                    console.log("selectedFeatures:", selectedFeatures);
                 });
             }
         });
@@ -837,7 +853,7 @@ require([
 
         // ** WIDGETS
 
-        // Zoom to State Boundaries
+        // Zoom to Utah Extent
         zoomToUtah = () => {
             view.ui.add("btn-zoomUtah", "top-left");
             const btn = document.getElementById("btn-zoomUtah");
@@ -1038,36 +1054,20 @@ require([
         // Save selected item(s) to a text file
         // https://www.youtube.com/watch?v=3gX2oM5CRbo
 
-        function setupCSV() {
-            // create UI button
-            view.ui.add("btn-exportDiv", "top-right");
-            const btn = document.getElementById("btn-exportDiv");
-            btn.addEventListener("click", () => {
-                alert("This is not yet functional");
-
-                if (selectedFeatures.length) {
-                    // export to csv
-                    const attrs = selectedFeatures.map(a => a.attributes);
-                    const headers = {};
-                    const entry = attrs[0];
-
-                    for (let key in entry) {
-                        if (entry.hasOwnProperty(key)) {
-                            headers[key] = key;
-                        }
-                    }
-
-                    exportCSVFile(headers, attrs, "export");
-                }
-            });
-        };
-        setupCSV();
-
-
         // CSV export functions
         // https://medium.com/@danny.pule/export-json-to-csv-file-using-javascript-a0b7bc5b00d2
-        function convertToCSV(objArray) {
-            const array = typeof objArray != "object" ? JSON.parse(objArray) : objArray;
+
+        function convertToCSV(jsonObject) {
+
+            // This is the remaining hard part
+            // Need to:  Convert the parsed JSON object into a CSV string
+            // See possible solution: https://stackoverflow.com/questions/8847766/how-to-convert-json-to-csv-format-and-store-in-a-variable
+
+
+            const array = JSON.parse(jsonObject);
+
+            console.log("array: ", array);
+
             let str = "";
 
             for (let i = 0; i < array.length; i++) {
@@ -1080,17 +1080,13 @@ require([
                 }
                 str += line + "\r\n";
             }
-
+            console.log("converted to CSV", str);
             return str;
         }
 
-        function exportCSVFile(headers, items, fileTitle) {
-            if (headers) {
-                items.unshift(headers);
-            }
 
-            // Convert Object to JSON
-            let jsonObject = JSON.stringify(items);
+
+        function exportCSVFile(jsonObject, fileTitle) {
 
             const csv = convertToCSV(jsonObject);
 
@@ -1116,6 +1112,43 @@ require([
                 }
             }
         }
+
+
+
+        function setupCSV() {
+            // create UI button and the event handler
+
+            view.ui.add("btn-exportDiv", "top-right");
+            const btn = document.getElementById("btn-exportDiv");
+
+            btn.addEventListener("click", () => {
+
+                if (selectedFeatures.length) {
+                    // set up the query on the featureLayer containing all projects
+                    let query = allProjectsLines.createQuery();
+
+                    query.returnGeometry = false;
+                    query.where = `OBJECTID IN (${selectedFeatures})`;
+                    query.outFields = ['*'];
+
+                    allProjectsLines.queryFeatures(query)
+                        .then(function(response) {
+
+                            // returns a feature set
+                            console.log("FeatureSet: ", response);
+
+                            // returns results as JSON
+                            console.log("JSON Response: ", JSON.stringify(response.toJSON()));
+
+                            exportCSVFile(JSON.stringify(response.toJSON()), "export");
+                    });
+
+                }
+            });
+        };
+        setupCSV();
+
+
 
         // end of CSV Export
 
