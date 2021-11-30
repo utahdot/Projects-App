@@ -1050,49 +1050,15 @@ require([
          *  Functions for exporting selectedFeatures array to CSV files
          */
 
-        // *** CSV Export
-        // Save selected item(s) to a text file
-        // https://www.youtube.com/watch?v=3gX2oM5CRbo
 
         // CSV export functions
-        // https://medium.com/@danny.pule/export-json-to-csv-file-using-javascript-a0b7bc5b00d2
-
-        function convertToCSV(jsonObject) {
-
-            // This is the remaining hard part
-            // Need to:  Convert the parsed JSON object into a CSV string
-            // See possible solution: https://stackoverflow.com/questions/8847766/how-to-convert-json-to-csv-format-and-store-in-a-variable
+        // Based on: https://stackoverflow.com/questions/8847766/how-to-convert-json-to-csv-format-and-store-in-a-variable
 
 
-            const array = JSON.parse(jsonObject);
-
-            console.log("array: ", array);
-
-            let str = "";
-
-            for (let i = 0; i < array.length; i++) {
-                let line = "";
-                for (let index in array[i]) {
-                    if (line != "") {
-                        line += ",";
-                    }
-                    line += array[i][index];
-                }
-                str += line + "\r\n";
-            }
-            console.log("converted to CSV", str);
-            return str;
-        }
-
-
-
-        function exportCSVFile(jsonObject, fileTitle) {
-
-            const csv = convertToCSV(jsonObject);
+        function exportCSVFile(CSVstring, fileTitle) {
 
             const exportedFilenmae = fileTitle + ".csv" || "export.csv";
-
-            const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+            const blob = new Blob([CSVstring], { type: "text/csv;charset=utf-8;" });
 
             if (navigator.msSaveBlob) {
                 // IE 10+
@@ -1114,7 +1080,6 @@ require([
         }
 
 
-
         function setupCSV() {
             // create UI button and the event handler
 
@@ -1124,7 +1089,7 @@ require([
             btn.addEventListener("click", () => {
 
                 if (selectedFeatures.length) {
-                    // set up the query on the featureLayer containing all projects
+                    // set up the query on the allProjectsLines featureLayer
                     let query = allProjectsLines.createQuery();
 
                     query.returnGeometry = false;
@@ -1134,13 +1099,44 @@ require([
                     allProjectsLines.queryFeatures(query)
                         .then(function(response) {
 
-                            // returns a feature set
-                            console.log("FeatureSet: ", response);
+                            let projectsJSON = response.toJSON();     // convert the query response to JSON
+                            let features = projectsJSON['features'];  // returns an array of feature objects
+                            let fields = Object.keys(features[0]['attributes']);  // get the field names as an array of strings
 
-                            // returns results as JSON
-                            console.log("JSON Response: ", JSON.stringify(response.toJSON()));
+                            // build the CSV string
 
-                            exportCSVFile(JSON.stringify(response.toJSON()), "export");
+                            // return the field value for a given key
+                            // change null values to empty strings
+                            let replacer = function(key, value) {return value === null ? '' : value}
+
+                            let csv = features.map(function(row) {
+                                // step through the features array
+                                // each feature object is a row
+
+                                return fields.map(function(fieldName) {
+                                    // step through the array of field name strings
+                                    // create an array of Stringified values, or empty strings for Nulls
+
+                                    return JSON.stringify(row["attributes"][fieldName], replacer);
+
+                                    // convert that array to a comma-separated string
+                                }).join(',')
+
+                                // return an array of strings
+                                // each string is a row of field values, separated by a comma
+                            })
+
+                            // add header column data
+                            // convert the array of header strings to a single string of comma-separated keys
+                            // insert the string at the front of the array of rows
+                            csv.unshift(fields.join(','));
+
+                            // convert the entire array to a string
+                            // separate each row with crlf
+                            csv = csv.join('\r\n');
+
+                            // send the string to the export file function
+                            exportCSVFile(csv, "export");
                     });
 
                 }
@@ -1148,10 +1144,6 @@ require([
         };
         setupCSV();
 
-
-
         // end of CSV Export
-
-
 
 });
